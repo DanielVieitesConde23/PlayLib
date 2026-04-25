@@ -1,0 +1,66 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #30428C;
+  overflow-x: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: white;
+  border-bottom: 2px #b13fbb solid;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 2%;
+}
+.image img {
+  width: 300px;       
+  height: auto;
+  border-radius: 8px; 
+}
+
+.details {
+  color: white;
+  max-width: 600px;
+  border: 2px solid #b13fbb;
+  padding: 15px;  
+  border-radius: 8px;
+  box-shadow: 0 0 10px #94289e;
+  background-color: #233471;
+}
+
+.review_title {
+  color: white;
+}
+
+.reviews {
+  width: 100%;
+  padding-left: 2%;
+}
+
+.add_review {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #b13fbb;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.actions button {
+  width: fit-content;
+}

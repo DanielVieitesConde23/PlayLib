@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #30428C;
+  overflow-x: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: white;
+}

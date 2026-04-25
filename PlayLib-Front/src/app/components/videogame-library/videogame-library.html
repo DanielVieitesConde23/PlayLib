@@ -1,0 +1,37 @@
+<div class="title">
+    <h1>Biblioteca de Videojuegos</h1>
+</div>
+<div class="layout">
+    <div class="search-container">
+        <div class="search">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Buscar juego</mat-label>
+                <input matInput placeholder="Escribe un juego..." [(ngModel)]="searchText">
+            </mat-form-field>
+            <button mat-raised-button class="button-filters">
+                Filtros
+            </button>
+            <button>
+                <mat-icon>favorite</mat-icon>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="grid">
+
+        @for (game of filteredGames; track game.id) {
+        <mat-card class="card" (click)="goToGame(game)">
+
+            <div class="image-container">
+                <img mat-card-image [src]="game.image_route" [alt]="game.name" />
+            </div>
+
+            <mat-card-content class="name">
+                {{ game.name }}
+            </mat-card-content>
+
+        </mat-card>
+        }
+    </div>
+</div>

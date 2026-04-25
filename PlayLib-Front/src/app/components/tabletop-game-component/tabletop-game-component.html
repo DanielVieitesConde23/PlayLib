@@ -1,0 +1,26 @@
+<div class="title">
+  <h1>{{ tabletop.name }}</h1>
+</div>
+<div class="content">
+  <div class="image">
+    <img [src]="tabletop.image_route" alt="{{ tabletop.name }}" />
+  </div>
+  <div class="details">
+    <p><b>Creador:</b> {{ tabletop.creator }}</p>
+    <p><b>Fecha de salida:</b> {{ tabletop.release_date | date:'longDate' }}</p>
+    <p><b>Descripción:</b> {{ tabletop.description }}</p>
+    <p><b>Mínimo de jugadores:</b> {{ tabletop.min_player }}</p>
+    <p><b>Máximo de jugadores:</b> {{ tabletop.max_player }}</p>
+    <p><b>Duración promedio:</b> {{ tabletop.average_duration }} minutos</p>
+    <p><b>Partidas jugadas:</b> {{ tabletop.plays }}</p>
+  </div>
+    <div class="actions">
+    <button>Favorito</button>
+    <button>Agregar a la biblioteca</button>
+    <button>Agregar a la lista de deseos</button>
+  </div>
+</div>
+<div class="reviews">
+  <h2 class="review_title">Reseñas</h2>
+  <button class="add_review">Escribir una reseña</button>
+</div>

@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #30428C;
+  overflow-x: hidden;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.layout {
+  width: 100%;
+  padding: 20px;
+}

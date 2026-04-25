@@ -1,0 +1,47 @@
+<div class="title">
+    <h1>Peticiones</h1>
+</div>
+<div class="content">
+    <h2 class="subtitle">Tus peticiones: </h2>
+    <button><mat-icon>add</mat-icon></button>
+</div>
+<div class="request-list">
+    <div class="grid">
+
+        @for (req of requests; track req.id) {
+        <mat-card class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    {{ req.title }}
+                </h3>
+                <button class="delete-btn">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+            <div class="description-container">
+                <p>{{ req.description }}</p>
+            </div>
+            <div class="card-footer">
+                @if(req.isTabletop) {
+                <p class="isTabletop">Juego de mesa</p>
+                }@else {
+                <p class="isVideogame">Videojuego</p>
+                }
+                @if(req.approved) {
+                <div class="request-approved">
+                    <p>Aprobada</p>
+                </div>
+                }@else if(req.approved === false) {
+                <div class="request-rejected">
+                    <p>Rechazada</p>
+                </div>
+                }@else {
+                <div class="request-pending">
+                    <p>Pendiente</p>
+                </div>
+                }
+            </div>
+        </mat-card>
+        }
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="title">
+  <h1>{{ videogame.name }}</h1>
+</div>
+<div class="content">
+  <div class="image">
+    <img [src]="videogame.image_route" alt="{{ videogame.name }}" />
+  </div>
+  <div class="details">
+    <p><b>Desarrollador:</b> {{ videogame.developer }}</p>
+    <p><b>Formato:</b> {{ videogame.format }}</p>
+    <p><b>Fecha de salida:</b> {{ videogame.release_date | date:'longDate' }}</p>
+    <p><b>Descripción:</b> {{ videogame.description }}</p>
+    <p><b>Estado:</b> {{ videogame.state }}</p>
+  </div>
+  <div class="actions">
+    <button>Favorito</button>
+    <button>Agregar a la biblioteca</button>
+    <button>Agregar a la lista de deseos</button>
+  </div>
+</div>
+<div class="reviews">
+  <h2 class="review_title">Reseñas</h2>
+  <button class="add_review">Escribir una reseña</button>
+</div>

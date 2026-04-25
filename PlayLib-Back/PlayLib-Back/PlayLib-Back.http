@@ -1,0 +1,6 @@
+@PlayLib_Back_HostAddress = http://localhost:5268
+
+GET {{PlayLib_Back_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,33 @@
+<div class="subtitle">
+  <h2>{{ title }}</h2>
+</div>
+
+<div class="carousel-container">
+
+  <button mat-icon-button class="nav left" (click)="scroll(carousel, -1)">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+
+  <div class="carousel" #carousel>
+
+    @for (game of tabletopGames; track game.id) {
+      <mat-card class="card" (click)="goToGame(game)">
+
+        <div class="image-container">
+          <img mat-card-image [src]="game.image_route" [alt]="game.name">
+        </div>
+
+        <mat-card-content class="name">
+          {{ game.name }}
+        </mat-card-content>
+
+      </mat-card>
+    }
+
+  </div>
+
+  <button mat-icon-button class="nav right" (click)="scroll(carousel, 1)">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+
+</div>
