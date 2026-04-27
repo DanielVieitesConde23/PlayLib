@@ -20,13 +20,14 @@ public static class ServicesConfiguration {
             options.UseSqlServer(configuration.GetSection("ConnectionStrings:DeveloperConnection").Value);
         });
 
-        services.AddCors(option =>
+        services.AddCors(options =>
         {
-            option.AddDefaultPolicy(builder =>
-            {
-                builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-            });
+            options.AddPolicy("AllowAll",
+                policy => policy.AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader());
         });
+
 
         services.AddControllers().AddNewtonsoftJson(options =>
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

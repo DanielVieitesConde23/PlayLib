@@ -12,4 +12,9 @@ import { RouterOutlet, RouterLinkWithHref, RouterModule } from '@angular/router'
   templateUrl: './nav-bar.html',
   styleUrl: './nav-bar.css',
 })
-export class NavBar { }
+export class NavBar { 
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+  }
+}
