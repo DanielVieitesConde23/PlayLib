@@ -5,7 +5,7 @@ namespace PlayLib_Back.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class FavouritesController(IFavouriteService favouriteService) : ControllerBase
+public class FavouritesController(IFavouriteService favouriteService) : Controller
 {
     private readonly IFavouriteService _favouriteService = favouriteService ?? throw new ArgumentNullException(nameof(favouriteService));
 
@@ -15,7 +15,7 @@ public class FavouritesController(IFavouriteService favouriteService) : Controll
     {
         var added = await _favouriteService.AddVideogameFavourite(userId, videogameId);
         if (!added)
-            return BadRequest(new { Success = false, Message = "Could not add favourite (limit 10 or already exists)." });
+            return BadRequest(new { Success = false, Message = "No se ha podido agregar a favoritos (límite 10 o ya existe)." });
         return Ok(new { Success = true });
     }
 
@@ -25,7 +25,7 @@ public class FavouritesController(IFavouriteService favouriteService) : Controll
     {
         var added = await _favouriteService.AddTabletopFavourite(userId, tabletopId);
         if (!added)
-            return BadRequest(new { Success = false, Message = "Could not add favourite (limit 10 or already exists)." });
+            return BadRequest(new { Success = false, Message = "No se ha podido agregar a favoritos (límite 10 o ya existe)." });
         return Ok(new { Success = true });
     }
 
@@ -35,7 +35,7 @@ public class FavouritesController(IFavouriteService favouriteService) : Controll
     {
         var removed = await _favouriteService.RemoveVideogameFavourite(userId, videogameId);
         if (!removed)
-            return NotFound(new { Success = false, Message = "Favourite not found." });
+            return NotFound(new { Success = false, Message = "Favorito no encontrado." });
         return Ok(new { Success = true });
     }
 
@@ -45,7 +45,7 @@ public class FavouritesController(IFavouriteService favouriteService) : Controll
     {
         var removed = await _favouriteService.RemoveTabletopFavourite(userId, tabletopId);
         if (!removed)
-            return NotFound(new { Success = false, Message = "Favourite not found." });
+            return NotFound(new { Success = false, Message = "Favorito no encontrado." });
         return Ok(new { Success = true });
     }
 

@@ -1,4 +1,6 @@
-﻿namespace PlayLib.Data.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PlayLib.Data.Entities;
 
 public class Tag {
     public Guid Id { get; set; }
@@ -10,15 +12,21 @@ public class Tag {
 }
 
 public class TagTabletop {
+    [Column("Tag_Id")]
     public Guid TagId { get; set; }
+    [Column("Tabletop_Id")]
     public Guid TabletopId { get; set; }
 
     public Tag Tag { get; set; } = null!;
-    public TabletopGame TabletopGame { get; set; } = null!;
+    public TabletopGame Tabletop { get; set; } = null!;
 }
 
 public class TagVideogame {
+
+    [Column("Tag_Id")]
     public Guid TagId { get; set; }
+
+    [Column("Videogame_Id")]
     public Guid VideogameId { get; set; }
 
     public Tag Tag { get; set; } = null!;

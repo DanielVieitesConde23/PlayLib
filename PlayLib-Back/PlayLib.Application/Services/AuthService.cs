@@ -1,20 +1,23 @@
-﻿using PlayLib.Application.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using PlayLib.Application.Interfaces;
 using PlayLib.Application.Interfaces.Repositories;
 using PlayLib.Data.DTOs;
 using PlayLib.Data.Entities;
 using PlayLib.Data.Responses;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace PlayLib.Application.Services;
 
-public class AuthService(IPasswordHasher passwordHasher, AuthConfiguration authConfiguration, IUserRepository userRepository) : IAuthService {
+public class AuthService(IPasswordHasher passwordHasher, AuthConfiguration authConfiguration, IUserRepository userRepository, IEmailSender emailSender) : IAuthService {
 
     private readonly IPasswordHasher _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
     private readonly IUserRepository _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     private readonly AuthConfiguration _authConfiguration = authConfiguration ?? throw new ArgumentNullException(nameof(authConfiguration));
+    private readonly IEmailSender _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
 
     public async Task<AuthUserResponse> Login(User user)
     {
@@ -51,6 +54,31 @@ public class AuthService(IPasswordHasher passwordHasher, AuthConfiguration authC
         return _passwordHasher.VerifyPassword(password, passwordHash);
     }
 
+    public bool ResetPassword(User user)
+    {
+        try
+        {
+            var newPassword = GeneratePassword();
+            string newHashedPassword = _passwordHasher.HashPassword(newPassword);
+            user.Password = newHashedPassword;
+            _userRepository.UpdateUser(user);
+            _emailSender.SendEmail(user.Email, "Restablecimiento de contraseña", $"Tu nueva contraseña es: {newPassword}. Si no realizaste esta acción, por favor restablece tu contraseña.");
+            return true;
+        } catch (Exception)
+        {
+            return false;
+        }
+
+
+    }
+
+    private static string GeneratePassword(int length = 12)
+    {
+        const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return new string(
+            [.. Enumerable.Range(0, length).Select(_ => chars[RandomNumberGenerator.GetInt32(chars.Length)])]);
+    }
+
     private string GenerateToken(User user)
     {
         SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authConfiguration.Key));
@@ -72,5 +100,4 @@ public class AuthService(IPasswordHasher passwordHasher, AuthConfiguration authC
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-
 }

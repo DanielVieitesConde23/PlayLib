@@ -16,18 +16,20 @@ public class TabletopRepository(PlayLibDContext context) : ITabletopRepository {
 
     public async Task<TabletopGame> GetTabletop(Guid tabletopId)
     {
-        return await _dbContext.TabletopGames
+        var tabletopGame = await _dbContext.TabletopGames
             .Include(v => v.Reviews)
                 .ThenInclude(r => r.User)
             .Include(v => v.Tags)
-                .ThenInclude(r => r.Tag)
-             .Include(v => v.Languages)
+                .ThenInclude(t => t.Tag)
+            .Include(v => v.Languages)
                 .ThenInclude(l => l.Language)
             .Include(v => v.Libraries)
                 .ThenInclude(l => l.User)
             .Include(v => v.Favourites)
                 .ThenInclude(f => f.User)
             .FirstOrDefaultAsync(x => x.Id == tabletopId);
+
+        return tabletopGame == null ? throw new Exception("Tabletop game not found") : tabletopGame;
     }
 
     public async Task<IEnumerable<TabletopGame>> GetTabletopsByTag(string tag, Guid userId)
@@ -59,12 +61,39 @@ public class TabletopRepository(PlayLibDContext context) : ITabletopRepository {
     {
         var mostPopularTag = await _dbContext.TabletopLibraries
             .Where(l => l.UserId == userId)
-            .SelectMany(l => l.TabletopGame.Tags)
+            .SelectMany(l => l.Tabletop.Tags)
             .GroupBy(t => t.Tag.Name)
             .OrderByDescending(g => g.Count())
             .Select(g => g.Key)
             .FirstOrDefaultAsync();
 
         return mostPopularTag ?? string.Empty;
+    }
+
+    public Task<bool> UpdateTabletopPlayedGames(Guid tabletopId, Guid userId, int playedGames)
+    {
+        var libraryEntry = _dbContext.TabletopLibraries
+            .FirstOrDefault(l => l.UserId == userId && l.TabletopId == tabletopId);
+        if (libraryEntry == null)
+            return Task.FromResult(false);
+        libraryEntry.TimesPlayed = playedGames;
+        _dbContext.SaveChanges();
+        return Task.FromResult(true);
+    }
+
+    public async Task CreateTabletopGame(TabletopGame tabletopGame)
+    {
+        try
+        {
+            await _dbContext.TabletopGames.AddAsync(tabletopGame);
+
+            await _dbContext.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(
+                $"Unexpected error: {ex.Message}",
+                ex);
+        }
     }
 }

@@ -4,10 +4,11 @@ namespace PlayLib.Data.Entities;
 
 public class User {
     public Guid Id { get; set; }
-    public string UserName { get; set; }
-    public string Password { get; set; }
-    public string Email { get; set; }
-    public string Role { get; set; }
+    public string? UserName { get; set; }
+    public string? Password { get; set; }
+    public string? Email { get; set; }
+    public string? Role { get; set; }
+    public string? Profile_Img { get; set; }
 
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
     public ICollection<Request> Requests { get; set; } = new List<Request>();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlayLib.Application.Interfaces.Repositories;
+using PlayLib.Data.DTOs;
 using PlayLib.Data.Entities;
 
 namespace PlayLib.Application.Services.Repositories;
@@ -66,5 +67,70 @@ public class VideogameRepository(PlayLibDContext context) : IVideogameRepository
             .FirstOrDefaultAsync();
 
         return mostPopularTag ?? string.Empty;
+    }
+
+    public async Task<List<GameSearchResult>> SearchGamesByName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            return new List<GameSearchResult>();
+
+        name = name.ToLower();
+
+        var videogames = await _dbContext.Videogames
+            .Where(v => v.Name.ToLower().Contains(name))
+            .Select(v => new GameSearchResult
+            {
+                Id = v.Id,
+                Name = v.Name,
+                Type = "Videogame"
+            })
+            .ToListAsync();
+
+        var tabletops = await _dbContext.TabletopGames
+            .Where(t => t.Name.ToLower().Contains(name))
+            .Select(t => new GameSearchResult
+            {
+                Id = t.Id,
+                Name = t.Name,
+                Type = "Tabletop"
+            })
+            .ToListAsync();
+
+        return [.. videogames, .. tabletops];
+    }
+
+    public async Task UpdateLibraryState(Guid videogameId, Guid userId, string newState)
+    {
+        var libraryEntry = await _dbContext.VideogameLibraries
+            .FirstOrDefaultAsync(l => l.VideogameId == videogameId && l.UserId == userId);
+        if (libraryEntry != null)
+        {
+            libraryEntry.State = newState;
+            await _dbContext.SaveChangesAsync();
+        }
+    }
+
+    public async Task UpdateLibraryFormat(Guid videogameId, Guid userId, string newFormat)
+    {
+        var libraryEntry = await _dbContext.VideogameLibraries
+           .FirstOrDefaultAsync(l => l.VideogameId == videogameId && l.UserId == userId);
+        if (libraryEntry != null)
+        {
+            libraryEntry.Format = newFormat;
+            await _dbContext.SaveChangesAsync();
+        }
+    }
+
+    public async Task CreateVideogame(Videogame videogame)
+    {
+        try
+        {
+            await _dbContext.Videogames.AddAsync(videogame);
+            await _dbContext.SaveChangesAsync();
+        } 
+        catch
+        {
+            throw new SystemException("Error creating videogame");
+        }
     }
 }

@@ -1,11 +1,14 @@
 using PlayLib.Application.Interfaces;
 using PlayLib.Data.DTOs;
 using PlayLib.Application.Interfaces.Repositories;
+using PlayLib.Data.Entities;
 
 namespace PlayLib.Application.Services;
 
-public class RequestService(IRequestRepository requestRepository) : IRequestService {
+public class RequestService(IRequestRepository requestRepository, IEmailSender emailSender, IUserRepository userRepository) : IRequestService {
     private readonly IRequestRepository _requestRepository = requestRepository ?? throw new ArgumentNullException(nameof(requestRepository));
+    private readonly IUserRepository _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+    private readonly IEmailSender _emailSender = emailSender ?? throw new ArgumentNullException(nameof(emailSender));
 
     public async Task<IEnumerable<RequestDTO>> GetRequestsForUser(Guid userId) {
         var requests = await _requestRepository.GetByUserId(userId);
@@ -32,13 +35,53 @@ public class RequestService(IRequestRepository requestRepository) : IRequestServ
         return await _requestRepository.Create(req);
     }
 
-    public async Task<bool> ApproveRequest(Guid requestId) {
-        return await _requestRepository.SetApproved(requestId);
+    public async Task<bool> ApproveRequest(Guid requestId) 
+    {
+        try
+        {
+            await _requestRepository.SetApproved(requestId);
+
+            var request = await _requestRepository.GetById(requestId);
+
+            var useremail = await _userRepository.GetUserEmailByRequest(requestId);
+
+            var subject = "Petición aprobada";
+
+            var body = $"Tu solicitud de juego para {request.GameName} ha sido aprobada.";
+
+            _emailSender.SendEmail(useremail, subject, body);
+
+            return true;
+        }
+        catch
+        { 
+            return false;
+        }
+
     }
 
     public async Task<bool> DenyRequest(Guid requestId)
     {
-        return await _requestRepository.SetDenied(requestId);
+        try
+        {
+            await _requestRepository.SetDenied(requestId);
+
+            var request = await _requestRepository.GetById(requestId);
+
+            var useremail = await _userRepository.GetUserEmailByRequest(requestId);
+
+            var subject = "Petición denegada";
+
+            var body = $"Tu solicitud de juego para {request.GameName} ha sido denegada.";
+
+            _emailSender.SendEmail(useremail, subject, body);
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     public async Task<IEnumerable<RequestDTO>> GetAllRequests()

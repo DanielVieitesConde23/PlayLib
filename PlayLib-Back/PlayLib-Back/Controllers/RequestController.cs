@@ -33,7 +33,7 @@ public class RequestController(IRequestService requestService) : ControllerBase 
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] RequestDTO request)
+    public async Task<IActionResult> Create([FromBody] RequestDTO    request)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -45,7 +45,7 @@ public class RequestController(IRequestService requestService) : ControllerBase 
     }
 
     [HttpPost]
-    [Route("approve/{id}")]
+    [Route("approve/{requestId}")]
     public async Task<IActionResult> Approve(Guid requestId)
     {
         if (!await _requestService.ApproveRequest(requestId))
@@ -55,7 +55,7 @@ public class RequestController(IRequestService requestService) : ControllerBase 
     }
 
     [HttpPost]
-    [Route("deny/{id}")]
+    [Route("deny/{requestId}")]
     public async Task<IActionResult> Deny(Guid requestId)
     {
         if (!await _requestService.DenyRequest(requestId))
@@ -65,7 +65,7 @@ public class RequestController(IRequestService requestService) : ControllerBase 
     }
 
     [HttpDelete]
-    [Route("remove/{id}")]
+    [Route("remove/{requestId}")]
     public async Task<IActionResult> Remove(Guid requestId)
     {
         if (!await _requestService.RemoveRequest(requestId))

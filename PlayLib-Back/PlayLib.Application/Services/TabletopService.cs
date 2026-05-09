@@ -1,6 +1,7 @@
 using PlayLib.Application.Interfaces;
 using PlayLib.Application.Interfaces.Repositories;
 using PlayLib.Data.DTOs;
+using PlayLib.Data.Entities;
 
 namespace PlayLib.Application.Services;
 
@@ -26,7 +27,6 @@ public class TabletopService(ITabletopRepository tabletopRepository) : ITabletop
             Developer = tabletop.Creator,
             ImageRoute = tabletop.ImageRoute,
             ReleaseDate = tabletop.ReleaseDate,
-            Format = tabletop.Format,
             AverageDuration = tabletop.AverageDuration,
             MaxPlayerNumber = tabletop.MaxPlayerNumber,
             MinPlayerNumber = tabletop.MinPlayerNumber,
@@ -85,5 +85,48 @@ public class TabletopService(ITabletopRepository tabletopRepository) : ITabletop
     public async Task<string> GetMostPupularTagForUser(Guid userId)
     {
         return await _tabletopRepository.GetMostPupularTagForUser(userId);
+    }
+
+    public async Task<bool> UpdateTabletopPlayedGames(Guid tabletopId, Guid userId, int playedGames)
+    {
+        return await _tabletopRepository.UpdateTabletopPlayedGames(tabletopId, userId, playedGames);
+    }
+
+    public async Task<bool> CreateTabletopGame(CreateTabletopGameDTO dto)
+    {
+        try
+        {
+            var tabletopGame = new TabletopGame
+            {
+                Id = Guid.NewGuid(),
+                Name = dto.Name,
+                Description = dto.Description,
+                Creator = dto.Creator,
+                ImageRoute = dto.Image_Route,
+                ReleaseDate = dto.Release_Date,
+
+                MinPlayerNumber = dto.MinPlayerNumber,
+                MaxPlayerNumber = dto.MaxPlayerNumber,
+                AverageDuration = dto.AverageDuration,
+
+                Tags = dto.Tags.Select(tagId => new TagTabletop
+                {
+                    TagId = tagId
+                }).ToList(),
+
+                Languages = dto.Languages.Select(languageId => new LanguageTabletop
+                {
+                    LanguageId = languageId
+                }).ToList()
+            };
+
+            await _tabletopRepository.CreateTabletopGame(tabletopGame);
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

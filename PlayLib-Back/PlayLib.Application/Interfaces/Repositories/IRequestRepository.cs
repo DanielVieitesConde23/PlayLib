@@ -14,4 +14,6 @@ public interface IRequestRepository {
     Task<IEnumerable<Request>> GetAll();
 
     Task<bool> Delete(Guid requestId);
+
+    Task<Request> GetById(Guid requestId);
 }

@@ -58,7 +58,7 @@ public class FavouriteRepository(PlayLibDContext context) : IFavouriteRepository
     {
         return await _dbContext.FavouriteTabletops
             .Where(f => f.UserId == userId)
-            .Select(f => f.TabletopGame)
+            .Select(f => f.Tabletop)
             .ToListAsync();
     }
 }

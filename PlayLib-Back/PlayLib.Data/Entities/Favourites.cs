@@ -1,11 +1,15 @@
-﻿namespace PlayLib.Data.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PlayLib.Data.Entities;
 
 public class FavouriteTabletop {
+    [Column("User_Id")]
     public Guid UserId { get; set; }
+    [Column("Tabletop_Id")]
     public Guid TabletopId { get; set; }
 
     public User User { get; set; } = null!;
-    public TabletopGame TabletopGame { get; set; } = null!;
+    public TabletopGame Tabletop { get; set; } = null!;
 }
 
 public class FavouriteVideogame {

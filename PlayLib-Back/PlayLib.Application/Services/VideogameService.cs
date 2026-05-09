@@ -27,8 +27,8 @@ public class VideogameService(IVideogameRepository videogameRepository) : IVideo
             Developer = videogame.Developer,
             ImageRoute = videogame.ImageRoute,
             ReleaseDate = videogame.ReleaseDate,
-            Format = videogame.Format,
             State = videogame.Libraries.FirstOrDefault(x => x.UserId == userId)?.State,
+            Format = videogame.Libraries.FirstOrDefault(x => x.UserId == userId)?.Format,
             IsFavourite = videogame.Favourites.Any(f => f.UserId == userId),
             IsInLibrary = videogame.Libraries.Any(l => l.UserId == userId),
             Reviews = videogame.Reviews.Select(r => new ReviewDTO
@@ -83,5 +83,72 @@ public class VideogameService(IVideogameRepository videogameRepository) : IVideo
     public async Task<string> GetMostPupularTagForUser(Guid userId)
     {
         return await _videogameRepository.GetMostPupularTagForUser(userId);
+    }
+
+    public async Task<List<GameSearchResult>> SearchGamesByName(string name)
+    {
+        return await _videogameRepository.SearchGamesByName(name);
+    }
+
+    public async Task<bool> UpdateVideogameState(Guid videogameId, Guid userId, string newState)
+    {
+        try
+        {
+            await _videogameRepository.UpdateLibraryState(videogameId, userId, newState);
+            return true;
+        }
+        catch (Exception) 
+        {
+            return false;
+        }
+        
+    }
+
+    public async Task<bool> UpdateVideogameFormat(Guid videogameId, Guid userId, string newFormat)
+    {
+        try
+        {
+            await _videogameRepository.UpdateLibraryFormat(videogameId, userId, newFormat);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> CreateVideogame(CreateVideogameDTO videogameDTO)
+    {
+        try
+        {
+
+            var videogame = new Videogame
+            {
+                Id = Guid.NewGuid(),
+                Name = videogameDTO.Name,
+                Description = videogameDTO.Description,
+                Developer = videogameDTO.Developer,
+                ImageRoute = videogameDTO.Image_Route,
+                ReleaseDate = videogameDTO.Release_Date,
+
+                Tags = videogameDTO.Tags.Select(tagId => new TagVideogame
+                {
+                    TagId = tagId
+                }).ToList(),
+
+                Languages = videogameDTO.Languages.Select(languageId => new LanguageVideogame
+                {
+                    LanguageId = languageId
+                }).ToList()
+            };
+
+            await _videogameRepository.CreateVideogame(videogame);
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

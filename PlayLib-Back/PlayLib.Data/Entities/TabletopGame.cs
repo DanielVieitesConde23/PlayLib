@@ -1,15 +1,20 @@
 ﻿using PlayLib.Data.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class TabletopGame {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;
     public string Creator { get; set; } = null!;
+    [Column("Image_Route")]
     public string? ImageRoute { get; set; }
+    [Column("Release_Date")]
     public DateTime? ReleaseDate { get; set; }
-    public string Format { get; set; } = null!;
+    [Column("Min_Player_Number")]
     public int MinPlayerNumber { get; set; }
+    [Column("Max_Player_Number")]
     public int MaxPlayerNumber { get; set; }
+    [Column("Average_Duration")]
     public int AverageDuration { get; set; }
 
     public ICollection<Review> Reviews { get; set; } = new List<Review>();

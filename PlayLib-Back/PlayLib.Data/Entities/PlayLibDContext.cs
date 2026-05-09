@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace PlayLib.Data.Entities;
 
@@ -38,37 +39,80 @@ public class PlayLibDContext : DbContext {
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<Videogame>().ToTable("Videogames");
+
+        builder.Entity<TabletopGame>().ToTable("Tabletop_Games");
+
+        builder.Entity<VideogameLibrary>()
+            .ToTable("Videogame_Library")
+            .HasKey(l => new { l.UserId, l.VideogameId });
+
+        builder.Entity<TabletopLibrary>()
+            .ToTable("Tabletop_Library")
+            .HasKey(l => new { l.UserId, l.TabletopId });
+
         builder.Entity<FavouriteTabletop>()
+            .ToTable("Favourites_Tabletop")
             .HasKey(f => new { f.UserId, f.TabletopId });
 
         builder.Entity<FavouriteVideogame>()
+            .ToTable("Favourites_Videogame")
             .HasKey(f => new { f.UserId, f.VideogameId });
 
         builder.Entity<LanguageTabletop>()
+            .ToTable("Language_Tabletop")
             .HasKey(l => new { l.LanguageId, l.TabletopId });
 
         builder.Entity<LanguageVideogame>()
+            .ToTable("Language_Videogames")
             .HasKey(l => new { l.LanguageId, l.VideogameId });
 
         builder.Entity<TagTabletop>()
+            .ToTable("Tags_Tabletop")
             .HasKey(t => new { t.TagId, t.TabletopId });
 
         builder.Entity<TagVideogame>()
+            .ToTable("Tags_Videogames")
             .HasKey(t => new { t.TagId, t.VideogameId });
 
-        builder.Entity<Review>()
-            .ToTable(t =>
-            {
-                t.HasCheckConstraint(
-                    "CK_Reviews_OnlyOneTarget",
-                    "(videogame_id IS NOT NULL AND tabletop_game_id IS NULL) OR (videogame_id IS NULL AND tabletop_game_id IS NOT NULL)"
-                );
+        builder.Entity<Review>(entity =>
+        {
+            entity.ToTable("Reviews");
 
-                t.HasCheckConstraint(
-                    "CK_Reviews_Rating",
-                    "rating >= 0 AND rating <= 5"
-                );
-            });
+            entity.Property(r => r.TabletopGameId)
+                .HasColumnName("tabletop_game_id");
+
+            entity.Property(r => r.VideogameId)
+                .HasColumnName("videogame_id");
+
+            entity.HasOne(r => r.TabletopGame)
+                .WithMany(t => t.Reviews)
+                .HasForeignKey(r => r.TabletopGameId)
+                .HasPrincipalKey(t => t.Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(r => r.Videogame)
+                .WithMany(v => v.Reviews)
+                .HasForeignKey(r => r.VideogameId)
+                .HasPrincipalKey(v => v.Id)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<Request>()
+            .ToTable("Requests");
+
+        builder.Entity<Tag>()
+            .ToTable("Tags");
+
+        foreach (var entity in builder.Model.GetEntityTypes())
+        {
+            Console.WriteLine($"ENTITY: {entity.Name}");
+
+            foreach (var property in entity.GetProperties())
+            {
+                Console.WriteLine($"  PROPERTY: {property.Name} -> COLUMN: {property.GetColumnName()}");
+            }
+        }
 
         base.OnModelCreating(builder);
     }

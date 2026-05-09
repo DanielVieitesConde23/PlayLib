@@ -1,4 +1,6 @@
-﻿namespace PlayLib.Application.Interfaces.Repositories;
+﻿using PlayLib.Data.DTOs;
+
+namespace PlayLib.Application.Interfaces.Repositories;
 
 public interface IVideogameRepository {
 
@@ -11,4 +13,12 @@ public interface IVideogameRepository {
     Task<IEnumerable<Videogame>> GetMostPopularGames(Guid userId);
 
     Task<string> GetMostPupularTagForUser(Guid userId);
+
+    Task<List<GameSearchResult>> SearchGamesByName(string name);
+
+    Task UpdateLibraryState(Guid videogameId, Guid userId, string newState);
+
+    Task UpdateLibraryFormat(Guid videogameId, Guid userId, string newFormat);
+
+    Task CreateVideogame(Videogame videogame);
 }

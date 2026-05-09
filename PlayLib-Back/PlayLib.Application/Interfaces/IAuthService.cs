@@ -9,4 +9,6 @@ public interface IAuthService {
     Task<AuthUserResponse> Login(User user);
 
     bool IsPasswordCorrect(string password, string passwordHash);
+
+    bool ResetPassword(User user);
 }

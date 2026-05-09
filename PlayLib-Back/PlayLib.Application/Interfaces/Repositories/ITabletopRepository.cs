@@ -13,4 +13,8 @@ public interface ITabletopRepository {
     Task<IEnumerable<TabletopGame>> GetMostPopularTabletops(Guid userId);
 
     Task<string> GetMostPupularTagForUser(Guid userId);
+
+    Task<bool> UpdateTabletopPlayedGames(Guid tabletopId, Guid userId, int playedGames);
+
+    Task CreateTabletopGame(TabletopGame tabletopGame);
 }

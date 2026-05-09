@@ -22,26 +22,40 @@ public class RequestRepository(PlayLibDContext context) : IRequestRepository {
     }
 
     public async Task<bool> SetApproved(Guid requestId) {
-        var req = await _dbContext.Requests.FindAsync(requestId);
-        if (req == null) return false;
-        req.Approved = true;
-        await _dbContext.SaveChangesAsync();
-        return true;
+        try
+        {
+            var req = await _dbContext.Requests.FindAsync(requestId);
+            if (req == null)
+                return false;
+            req.Approved = true;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        } catch
+        {
+            return false;
+        }
     }
 
     public async Task<bool> SetDenied(Guid requestId)
     {
-        var req = await _dbContext.Requests.FindAsync(requestId);
-        if (req == null)
+        try
+        {
+            var req = await _dbContext.Requests.FindAsync(requestId);
+            if (req == null)
+                return false;
+            req.Approved = false;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        catch
+        {
             return false;
-        req.Approved = false;
-        await _dbContext.SaveChangesAsync();
-        return true;
+        }
     }
 
     public async Task<IEnumerable<Request>> GetAll()
     {
-        return await _dbContext.Requests.ToListAsync();
+        return await _dbContext.Requests.Where(x => x.Approved == null).ToListAsync();
     }
 
     public async Task<bool> Delete(Guid requestId)
@@ -53,4 +67,8 @@ public class RequestRepository(PlayLibDContext context) : IRequestRepository {
         await _dbContext.SaveChangesAsync();
         return true;
     }   
+
+    public async Task<Request> GetById(Guid requestId) {
+        return await _dbContext.Requests.FindAsync(requestId);
+    }
 }

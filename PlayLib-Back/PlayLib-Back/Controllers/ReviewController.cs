@@ -14,13 +14,14 @@ public class ReviewController : ControllerBase {
     }
 
     [HttpGet]
-    [Route("videogame/{id}")]
-    public async Task<IActionResult> GetForVideogame(Guid id) {
-        var reviews = await _reviewService.GetReviewsForVideogame(id);
+    [Route("videogame/{reviewId}")]
+    public async Task<IActionResult> GetForVideogame(Guid reviewId) {
+        var reviews = await _reviewService.GetReviewsForVideogame(reviewId);
         return Ok(reviews);
     }
 
     [HttpPost]
+    [Route("create")]
     public async Task<IActionResult> Create([FromBody] ReviewDTO review) {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         var ok = await _reviewService.CreateReview(review);
@@ -29,9 +30,9 @@ public class ReviewController : ControllerBase {
     }
 
     [HttpDelete]
-    [Route("{id}")]
-    public async Task<IActionResult> Delete(Guid id) {
-        var ok = await _reviewService.DeleteReview(id);
+    [Route("delete/{reviewId}")]
+    public async Task<IActionResult> Delete(Guid reviewId) {
+        var ok = await _reviewService.DeleteReview(reviewId);
         if (!ok) return NotFound(new { Success = false });
         return Ok(new { Success = true });
     }
