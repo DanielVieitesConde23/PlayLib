@@ -14,16 +14,23 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  register(user : userRegister) : Observable<any> {
+  register(user: userRegister): Observable<any> {
     return this.http.post(`${this.url}/register`, user)
   }
 
-  login(user : userLogin) : Observable<any> {
+  login(user: userLogin): Observable<any> {
     return this.http.post(`${this.url}/login`, user)
   }
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    return !!token;
+    if (typeof window === 'undefined') {
+      return false;
+    }
+
+    return !!localStorage.getItem('token');
+  }
+
+  resetPassword(email: string): Observable<any> {
+    return this.http.put(`${this.url}/resetpassword?email=${email}`, {});
   }
 }

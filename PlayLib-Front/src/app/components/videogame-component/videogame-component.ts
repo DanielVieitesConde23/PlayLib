@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Videogame } from '../../model/videogame';
+import { Details } from '../../services/details';
 
 @Component({
   selector: 'app-videogame-component',
@@ -9,15 +10,37 @@ import { Videogame } from '../../model/videogame';
   styleUrl: './videogame-component.css',
 })
 export class VideogameComponent {
+    videogame!: Videogame;
+    tags: string[] = []; 
+  constructor(private detailsSvc: Details, private cdr: ChangeDetectorRef) { }
 
-    videogame: Videogame = {
-        id: '1',
-        name: 'Undertale',
-        description: 'Undertale es un videojuego de rol en 2D de 2015 creado por el desarrollador independiente estadounidense Toby Fox. El jugador controla a un niño que ha caído al subsuelo: una gran región aislada bajo la superficie de la Tierra, separada por una barrera mágica. ',
-        developer: 'Toby Fox',
-        image_route: 'https://i.imgur.com/EEnkEEf.jpg',
-        release_date: new Date('2015-09-15'),
-        format: 'Digital',
-        state: 'Played'  
-    };
+  ngOnInit(): void {
+    const id = history.state?.id;
+
+    if (id) {
+      this.loadGame(id);
+    }
+  }
+
+  loadGame(id: string) {
+    this.detailsSvc.getVideogameDetails(id).subscribe((data: any) => {
+      console.log('Received videogame details:', data);
+      this.videogame = {
+        developer: data.developer,
+        description: data.description,
+        id: data.id,
+        image_route: data.imageRoute,
+        name: data.name,
+        state: data.timesPlayed,
+        format: data.format,
+        release_date: new Date(data.releaseDate),
+        tags: data.tags.map((tag: any) => ({
+          id: tag.id,
+          name: tag.name,
+          hex: tag.hex
+        }))
+      };
+      this.cdr.detectChanges();
+    });
+  }
 }

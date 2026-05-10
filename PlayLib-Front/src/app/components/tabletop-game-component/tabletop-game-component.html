@@ -1,3 +1,4 @@
+@if(tabletop) {
 <div class="title">
   <h1>{{ tabletop.name }}</h1>
 </div>
@@ -14,7 +15,7 @@
     <p><b>Duración promedio:</b> {{ tabletop.average_duration }} minutos</p>
     <p><b>Partidas jugadas:</b> {{ tabletop.plays }}</p>
   </div>
-    <div class="actions">
+  <div class="actions">
     <button>Favorito</button>
     <button>Agregar a la biblioteca</button>
     <button>Agregar a la lista de deseos</button>
@@ -24,3 +25,4 @@
   <h2 class="review_title">Reseñas</h2>
   <button class="add_review">Escribir una reseña</button>
 </div>
+}

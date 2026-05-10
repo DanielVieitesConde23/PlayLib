@@ -1,3 +1,5 @@
+import { Tag } from "./tag";
+
 export interface Videogame {
   id: string; 
   name: string;
@@ -7,4 +9,5 @@ export interface Videogame {
   release_date: Date;
   format: string;
   state: string;
+  tags: Tag[];
 }

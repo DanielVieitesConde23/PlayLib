@@ -1,1 +1,26 @@
 <h1 class="title">Mi perfil</h1>
+<div class="profile-container">
+  <div class="profile-left">
+    <div class="round-container">
+      <img [src]="profile.image_route" alt="image">
+    </div>
+    <div class="username-container">
+      <p>{{ profile.name }}</p>
+    </div>
+  </div>
+
+  <div class="profile-right">
+    <div class="stats-container">
+      <p>Total de juegos: {{ profile.total_videogames + profile.total_tabletop_games }}</p>
+      <p>Total de videojuegos: {{ profile.total_videogames }}</p>
+      <p>Total de juegos de mesa: {{ profile.total_tabletop_games }}</p>
+    </div>
+  </div>
+</div>
+<div class="lists-container">
+  <app-scrollable-list-vg [title]="'Tus videojuegos favoritos'" [listVideogames]="videogames"></app-scrollable-list-vg>
+  <app-scrollable-list-tg [title]="'Tus juegos de mesa favoritos'" [listTabletops]="tabletops"></app-scrollable-list-tg>
+</div>
+<div class="delete-btn">
+  <button>Eliminar cuenta</button>
+</div>

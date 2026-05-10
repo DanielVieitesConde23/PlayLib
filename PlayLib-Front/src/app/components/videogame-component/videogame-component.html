@@ -1,3 +1,4 @@
+@if(videogame) {
 <div class="title">
   <h1>{{ videogame.name }}</h1>
 </div>
@@ -11,14 +12,20 @@
     <p><b>Fecha de salida:</b> {{ videogame.release_date | date:'longDate' }}</p>
     <p><b>Descripción:</b> {{ videogame.description }}</p>
     <p><b>Estado:</b> {{ videogame.state }}</p>
+    <p><b>Etiquetas:</b> 
+    @for(tag of videogame.tags; track tag) {
+      <span class="tag" [style.background-color]="tag.hex">{{ tag.name }}</span>
+    } @empty {
+      <span class="tag">Sin etiquetas</span>
+    }</p>
   </div>
   <div class="actions">
     <button>Favorito</button>
     <button>Agregar a la biblioteca</button>
-    <button>Agregar a la lista de deseos</button>
   </div>
 </div>
 <div class="reviews">
   <h2 class="review_title">Reseñas</h2>
   <button class="add_review">Escribir una reseña</button>
 </div>
+}

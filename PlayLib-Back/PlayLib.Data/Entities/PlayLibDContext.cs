@@ -67,6 +67,8 @@ public class PlayLibDContext : DbContext {
             .ToTable("Language_Videogames")
             .HasKey(l => new { l.LanguageId, l.VideogameId });
 
+        builder.Entity<Language>().ToTable("Language");
+
         builder.Entity<TagTabletop>()
             .ToTable("Tags_Tabletop")
             .HasKey(t => new { t.TagId, t.TabletopId });
@@ -85,7 +87,7 @@ public class PlayLibDContext : DbContext {
             entity.Property(r => r.VideogameId)
                 .HasColumnName("videogame_id");
 
-            entity.HasOne(r => r.TabletopGame)
+            entity.HasOne(r => r.Tabletop)
                 .WithMany(t => t.Reviews)
                 .HasForeignKey(r => r.TabletopGameId)
                 .HasPrincipalKey(t => t.Id)

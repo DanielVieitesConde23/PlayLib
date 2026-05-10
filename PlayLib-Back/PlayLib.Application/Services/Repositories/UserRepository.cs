@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using PlayLib.Application.Interfaces.Repositories;
 using PlayLib.Data.DTOs;
 using PlayLib.Data.Entities;
@@ -25,24 +26,45 @@ public class UserRepository(PlayLibDContext context) : IUserRepository {
         }
     }
 
-    public async Task<User> GetByEmail(string email)
+    public async Task<User?> GetByEmail(string email)
     {
-        return await _dbContext.Users
-            .FirstAsync(x => x.Email == email);
+        try
+        {
+            return await _dbContext.Users
+                .FirstOrDefaultAsync(x => x.Email == email);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
-    public async Task<User> GetByUsername(string username)
+    public async Task<User?> GetByUsername(string username)
     {
-        return await _dbContext.Users
-            .FirstAsync(x => x.UserName == username);
+        try
+        {
+            return await _dbContext.Users
+                .FirstOrDefaultAsync(x => x.UserName == username);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
-    public async Task<User> GetByLoginInfo(string loginInfo)
+    public async Task<User?> GetByLoginInfo(string loginInfo)
     {
-        return await _dbContext.Users
-            .FirstAsync(x =>
+        try
+        {
+            return await _dbContext.Users
+                .FirstOrDefaultAsync(x =>
                 x.UserName == loginInfo ||
                 x.Email == loginInfo);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     public async Task<User> GetById(Guid id)

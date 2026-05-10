@@ -10,11 +10,11 @@
 
   <div class="carousel" #carousel>
 
-    @for (game of tabletopGames; track game.id) {
+    @for (game of listTabletops; track game.id) {
       <mat-card class="card" (click)="goToGame(game)">
 
         <div class="image-container">
-          <img mat-card-image [src]="game.image_route" [alt]="game.name">
+          <img mat-card-image [src]="game.image" [alt]="game.name">
         </div>
 
         <mat-card-content class="name">

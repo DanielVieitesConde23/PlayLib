@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+    <p>{{ data.label }}</p>
+    <input
+    matInput
+    [(ngModel)]="value"
+    type="email"
+    [type]="data.type"
+    [placeholder]="data.placeholder"
+    required>
+    @if (error) {
+    <p style="color: red;">
+        Por favor, introduce un correo electrónico válido.
+    </p>
+    }
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="close()">Aceptar</button>
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

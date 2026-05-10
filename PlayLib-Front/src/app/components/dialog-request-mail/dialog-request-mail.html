@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Creación de juegos</h2>
+<mat-dialog-content>
+
+    <mat-select [(ngModel)]="requestSeleccionada">
+        @for (request of data.requests; track request.id) {
+        <mat-option [value]="request">
+            {{ request.title }}
+        </mat-option>
+        } @empty {
+        <mat-option disabled>No hay requests</mat-option>
+        }
+    </mat-select>
+
+    @if (requestSeleccionada) {
+
+    <p>Título:</p>
+    <input type="text" [(ngModel)]="requestSeleccionada.title">
+
+
+    <p>Descripción:</p>
+    <input type="text" [(ngModel)]="requestSeleccionada.description">
+
+
+    }
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

@@ -41,7 +41,8 @@ public class AuthService(IPasswordHasher passwordHasher, AuthConfiguration authC
             Email = userRegister.Email,
             Password = passwordHashed,
             UserName = userRegister.UserName,
-            Role = "User"
+            Role = "User",
+            Profile_Img = "https://imgur.com/LHs55ZV.png"
         };
 
         await _userRepository.Create(user);

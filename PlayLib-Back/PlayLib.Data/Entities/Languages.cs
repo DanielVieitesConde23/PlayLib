@@ -6,7 +6,7 @@ public class Language {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
 
-    public ICollection<LanguageTabletop> TabletopGames { get; set; } = new List<LanguageTabletop>();
+    public ICollection<LanguageTabletop> Tabletop { get; set; } = new List<LanguageTabletop>();
     public ICollection<LanguageVideogame> Videogames { get; set; } = new List<LanguageVideogame>();
 }
 

@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+import { environment } from '../model/environment';
+import { HttpClient } from '@angular/common/http';
+import { GamesCarrousel } from '../model/games-carrousel';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class HomeService {
+
+  private urlTabletop = environment.apiURL + 'Tabletop';
+
+  private urlVideogame = environment.apiURL + 'Videogame';
+
+  constructor(private http: HttpClient) { }
+
+  getPopularTabletopGames() {
+    return this.http.get<GamesCarrousel[]>(`${this.urlTabletop}/getpopulartabletops?userId=${localStorage.getItem('userId')}`);
+  }
+
+  getPopularVideogames() {
+    return this.http.get<GamesCarrousel[]>(`${this.urlVideogame}/getpopulargames?userId=${localStorage.getItem('userId')}`);
+  }
+  
+}

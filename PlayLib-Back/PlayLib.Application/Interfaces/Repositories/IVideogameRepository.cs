@@ -6,7 +6,7 @@ public interface IVideogameRepository {
 
     Task<bool> VideogameExists(Guid videogameId);
 
-    Task<Videogame> GetVideogame(Guid videogameId);
+    Task<Videogame?> GetVideogame(Guid videogameId);
 
     Task<IEnumerable<Videogame>> GetVideogamesByTag(string tag, Guid userId);
 

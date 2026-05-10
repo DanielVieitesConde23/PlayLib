@@ -1,3 +1,5 @@
+import { Tag } from "./tag";
+
 export interface Tabletop {
   id: string; 
   name: string;
@@ -9,4 +11,5 @@ export interface Tabletop {
   max_player: number;
   average_duration: number;
   plays: number;
+  tags: Tag[];
 }

@@ -13,7 +13,9 @@ public class FavouriteTabletop {
 }
 
 public class FavouriteVideogame {
+    [Column("User_Id")]
     public Guid UserId { get; set; }
+    [Column("Videogame_Id")]
     public Guid VideogameId { get; set; }
 
     public User User { get; set; } = null!;

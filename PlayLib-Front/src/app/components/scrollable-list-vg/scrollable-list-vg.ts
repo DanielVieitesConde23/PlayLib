@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { Videogame } from '../../model/videogame';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
+import { GamesCarrousel } from '../../model/games-carrousel';
+
 @Component({
   selector: 'app-scrollable-list-vg',
   imports: [MatCardModule, MatIconModule, MatButtonModule, RouterModule],
@@ -12,8 +13,15 @@ import { Router } from '@angular/router';
   styleUrl: './scrollable-list-vg.css',
 })
 export class ScrollableListVg {
+  private _listVideogames: GamesCarrousel[] = [];
   @Input() title: string = '';
-  @Input() videogames: Videogame[] = [];
+  @Input() 
+  set listVideogames(value: GamesCarrousel[]) {
+    this._listVideogames = value;
+  }
+  get listVideogames() {
+    return this._listVideogames;
+  }
 
   constructor(private router: Router) {}
 
@@ -24,9 +32,9 @@ export class ScrollableListVg {
     });
   }
 
-  goToGame(game: Videogame) {
-    this.router.navigate(['/videogame', game.name], {
-      state: { game }  
+  goToGame(game: GamesCarrousel) {
+    this.router.navigate(['user/videogame', game.name], {
+      state: { id: game.id }
     });
   }
 }

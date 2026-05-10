@@ -1,0 +1,34 @@
+<div class="title">
+    <h1>Buzón de peticiones</h1>
+</div>
+<div class="add-btn">
+    <button  matButton (click)="openDialog()"><mat-icon>add</mat-icon></button>
+</div>
+<div class="request-list">
+    <div class="grid">
+        @for (req of requests; track req.id) {
+        <mat-card class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    {{ req.title }}
+                </h3>
+            </div>
+            <div class="content-container">
+                <p>Usuario: {{ req.username }}</p>
+                <p>{{ req.description }}</p>
+            </div>
+            <div class="card-actions">
+                <button class="approve">Aprobar</button>
+                <button class="reject">Rechazar</button>
+            </div>
+            <div class="card-footer">
+                @if(req.isTabletop) {
+                <p class="isTabletop">Juego de mesa</p>
+                }@else {
+                <p class="isVideogame">Videojuego</p>
+                }
+            </div>
+        </mat-card>
+        }
+    </div>
+</div>

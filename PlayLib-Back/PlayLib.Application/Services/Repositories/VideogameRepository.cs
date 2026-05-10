@@ -15,9 +15,13 @@ public class VideogameRepository(PlayLibDContext context) : IVideogameRepository
             .AnyAsync(x => x.Id == videogameId);
     }
 
-    public async Task<Videogame> GetVideogame(Guid videogameId)
+    public async Task<Videogame?> GetVideogame(Guid videogameId)
     {
-        return await _dbContext.Videogames
+        try
+        {
+            _dbContext.Videogames.Include(x => x.Id);
+
+            return await _dbContext.Videogames
             .Include(v => v.Reviews)
                 .ThenInclude(r => r.User)
             .Include(v => v.Tags)
@@ -29,6 +33,13 @@ public class VideogameRepository(PlayLibDContext context) : IVideogameRepository
             .Include(v => v.Favourites)
                 .ThenInclude(f => f.User)
             .FirstOrDefaultAsync(x => x.Id == videogameId);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+
+            return null;
+        }
     }
 
     public async Task<IEnumerable<Videogame>> GetVideogamesByTag(string tag, Guid userId)

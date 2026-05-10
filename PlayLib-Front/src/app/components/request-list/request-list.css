@@ -29,12 +29,6 @@
   box-sizing: border-box;
 }
 
-.add-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .grid {
   max-width: 95%; 
   display: grid;

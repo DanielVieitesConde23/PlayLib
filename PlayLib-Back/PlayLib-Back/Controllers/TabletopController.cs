@@ -13,7 +13,7 @@ public class TabletopController(ITabletopService tabletopService) : ControllerBa
     private readonly ITabletopService _tabletopService = tabletopService ?? throw new ArgumentNullException(nameof(tabletopService));
 
     [HttpGet]
-    [Route("tabletop/{tabletopId}")]
+    [Route("{tabletopId}")]
     public async Task<IActionResult> GetTabletopWithReviews(Guid tabletopId, Guid userId)
     {
         if (!await _tabletopService.TabletopExists(tabletopId))
@@ -23,7 +23,7 @@ public class TabletopController(ITabletopService tabletopService) : ControllerBa
     }
 
     [HttpGet]
-    [Route("tabletop/GetTabletopByTag")]
+    [Route("GetTabletopByTag")]
     public async Task<IActionResult> GetTabletopsByTag(Guid userId)
     {
         var tag = await _tabletopService.GetMostPupularTagForUser(userId);
@@ -37,7 +37,7 @@ public class TabletopController(ITabletopService tabletopService) : ControllerBa
     }
 
     [HttpGet]
-    [Route("tabletop/GetPopularTabletops")]
+    [Route("GetPopularTabletops")]
     public async Task<IActionResult> GetMostPupoularTabletops(Guid userId)
     {
         var tabletops = await _tabletopService.GetMostPopularTabletops(userId);
@@ -48,7 +48,7 @@ public class TabletopController(ITabletopService tabletopService) : ControllerBa
     }
 
     [HttpPut]
-    [Route("tabletop/UpdateTabletopPlayedGames")]
+    [Route("UpdateTabletopPlayedGames")]
     public async Task<IActionResult> UpdateTabletopPlayedGames(Guid tabletopId, Guid userId, int playedGames)
     {
         if (!await _tabletopService.TabletopExists(tabletopId))

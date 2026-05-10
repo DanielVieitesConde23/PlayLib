@@ -95,17 +95,3 @@
 .search mat-form-field .mat-mdc-form-field-subscript-wrapper {
   display: none;
 }
-
-.button-filters {
-  height: 56px;
-  flex: 0 0 auto;
-}
-
-button.button-filters.mat-mdc-raised-button {
-  background-color: #584FD9 !important;
-  color: white !important;
-}
-
-button.button-filters.mat-mdc-raised-button:hover {
-  background-color: #b13fbb !important;
-}
