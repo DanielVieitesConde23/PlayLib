@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Videogame } from '../../model/videogame';
+import { Review } from '../../model/review';
 import { Details } from '../../services/details';
 
 @Component({
@@ -10,8 +11,9 @@ import { Details } from '../../services/details';
   styleUrl: './videogame-component.css',
 })
 export class VideogameComponent {
-    videogame!: Videogame;
-    tags: string[] = []; 
+  videogame!: Videogame;
+  tags: string[] = [];
+  reviews: Review[] = [];
   constructor(private detailsSvc: Details, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -40,7 +42,16 @@ export class VideogameComponent {
           hex: tag.hex
         }))
       };
+      this.reviews = (data.reviews ?? []).map((r: any) => ({
+        id: r.id,
+        username: r.username,
+        title: '',
+        content: r.content ?? '',
+        rating: r.rating,
+        review_date: new Date(r.reviewDate)
+      }));
       this.cdr.detectChanges();
     });
   }
 }
+

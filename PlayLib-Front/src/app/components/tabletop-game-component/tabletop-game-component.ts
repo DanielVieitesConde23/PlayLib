@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Tabletop } from '../../model/tabletop';
+import { Review } from '../../model/review';
 import { ActivatedRoute } from '@angular/router';
 import { Details } from '../../services/details';
 
@@ -12,6 +13,7 @@ import { Details } from '../../services/details';
 })
 export class TabletopGameComponent implements OnInit {
   tabletop!: Tabletop;
+  reviews: Review[] = [];
 
   constructor(private detailsSvc: Details, private cdr: ChangeDetectorRef) { }
 
@@ -43,7 +45,16 @@ export class TabletopGameComponent implements OnInit {
           hex: tag.hex
         }))
       };
+      this.reviews = (data.reviews ?? []).map((r: any) => ({
+        id: r.id,
+        username: r.username,
+        title: '',
+        content: r.content ?? '',
+        rating: r.rating,
+        review_date: new Date(r.reviewDate)
+      }));
       this.cdr.detectChanges();
     });
   }
 }
+

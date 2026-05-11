@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Tabletop } from '../../model/tabletop';
 import { RouterModule, Router } from '@angular/router';
+import { ProfileService } from '../../services/profile';
 @Component({
   selector: 'app-tabletop-game-library',
   imports: [
@@ -27,20 +28,44 @@ import { RouterModule, Router } from '@angular/router';
   templateUrl: './tabletop-game-library.html',
   styleUrl: './tabletop-game-library.css',
 })
-export class TabletopGameLibrary {
+export class TabletopGameLibrary implements OnInit {
   searchText = '';
   filter = 'all';
-  constructor(private router: Router) { }
+  constructor(private router: Router, private profileSvc: ProfileService, private cdr: ChangeDetectorRef) { }
   tabletops: Tabletop[] = [];
+
+  ngOnInit(): void {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.profileSvc.getLibraryBoardgames(userId).subscribe((response: any[]) => {
+        this.tabletops = response.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          description: '',
+          creator: '',
+          image_route: item.image,
+          release_date: new Date(),
+          min_player: 0,
+          max_player: 0,
+          average_duration: 0,
+          plays: 0,
+          tags: []
+        }));
+        this.cdr.detectChanges();
+      });
+    }
+  }
 
   get filteredGames(): Tabletop[] {
     return this.tabletops.filter(game =>
       game.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
+
   goToGame(game: Tabletop) {
-    this.router.navigate(['/tabletop-game', game.name], {
-      state: { game }
+    this.router.navigate(['user/tabletop-game', game.name], {
+      state: { id: game.id }
     });
   }
 }
+

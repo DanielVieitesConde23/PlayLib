@@ -12,11 +12,11 @@ public class LibraryController(ILibraryService libraryService) : Controller {
 
     [HttpPost]
     [Route("add/videogame")]
-    public IActionResult AddToLibrary(VideogameLibraryDTO videogameLibraryDTO)
+    public async Task<IActionResult> AddToLibrary(VideogameLibraryDTO videogameLibraryDTO)
     {
         try
         {
-            _libraryService.AddToLibrary(videogameLibraryDTO);
+            await _libraryService.AddToLibrary(videogameLibraryDTO);
             return Ok("Videojuego agregado a la biblioteca correctamente.");
         }
         catch (Exception ex) 
@@ -27,11 +27,11 @@ public class LibraryController(ILibraryService libraryService) : Controller {
 
     [HttpDelete]
     [Route("delete/videogame")]
-    public IActionResult RemoveFromLibrary(VideogameLibraryDTO videogameLibraryDTO)
+    public async Task<IActionResult> RemoveFromLibrary(VideogameLibraryDTO videogameLibraryDTO)
     {
         try
         {
-            _libraryService.RemoveFromLibrary(videogameLibraryDTO);
+            await _libraryService.RemoveFromLibrary(videogameLibraryDTO);
             return Ok("Videojuego eliminado de la biblioteca correctamente.");
         }
         catch (Exception ex)
@@ -41,12 +41,12 @@ public class LibraryController(ILibraryService libraryService) : Controller {
     }
 
     [HttpPost]
-    [Route("add/boardgame")]
-    public IActionResult AddToLibrary(BoardgameLibraryDTO boardgameLibraryDTO)
+    [Route("add/tabletop")]
+    public async Task<IActionResult> AddToLibrary(BoardgameLibraryDTO boardgameLibraryDTO)
     {
         try
         {
-            _libraryService.AddToLibrary(boardgameLibraryDTO);
+            await _libraryService.AddToLibrary(boardgameLibraryDTO);
             return Ok("Juego de mesa agregado a la biblioteca correctamente.");
         }
         catch (Exception ex)
@@ -56,12 +56,12 @@ public class LibraryController(ILibraryService libraryService) : Controller {
     }
 
     [HttpDelete]
-    [Route("delete/boardgame")]
-    public IActionResult RemoveFromLibrary(BoardgameLibraryDTO boardgameLibraryDTO)
+    [Route("delete/tabletop")]
+    public async Task<IActionResult> RemoveFromLibrary(BoardgameLibraryDTO boardgameLibraryDTO)
     {
         try
         {
-            _libraryService.RemoveFromLibrary(boardgameLibraryDTO);
+            await _libraryService.RemoveFromLibrary(boardgameLibraryDTO);
             return Ok("Juego de mesa eliminado de la biblioteca correctamente.");
         }
         catch (Exception ex)
@@ -72,11 +72,11 @@ public class LibraryController(ILibraryService libraryService) : Controller {
 
     [HttpGet]
     [Route("videogames/{userId}")]
-    public IActionResult GetVideogamesByUserId(Guid userId)
+    public async Task<IActionResult> GetVideogamesByUserId(Guid userId)
     {
         try
         {
-            var videogames = _libraryService.GetLibraryVideogamesForUser(userId);
+            var videogames = await _libraryService.GetLibraryVideogamesForUser(userId);
             return Ok(videogames);
         }
         catch (Exception ex)
@@ -86,12 +86,12 @@ public class LibraryController(ILibraryService libraryService) : Controller {
     }
 
     [HttpGet]
-    [Route("boardgames/{userId}")]
-    public IActionResult GetBoardgamesByUserId(Guid userId)
+    [Route("tabletop/{userId}")]
+    public async Task<IActionResult> GetBoardgamesByUserId(Guid userId)
     {
         try
         {
-            var boardgames = _libraryService.GetLibraryBoardGamesForUser(userId);
+            var boardgames = await _libraryService.GetLibraryBoardGamesForUser(userId);
             return Ok(boardgames);
         }
         catch (Exception ex)

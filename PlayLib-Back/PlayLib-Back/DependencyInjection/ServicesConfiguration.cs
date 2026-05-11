@@ -56,6 +56,9 @@ public static class ServicesConfiguration {
         services.AddScoped<IFavouriteService, FavouriteService>();
         services.AddScoped<IRequestRepository, RequestRepository>();
         services.AddScoped<IRequestService, RequestService>();
+        services.AddScoped<ILibraryService, LibraryService>();
+        services.AddScoped<ILibraryRepository, LibraryRepository>();
+        services.AddScoped<IUserService, UserService>();
         services.AddTransient<IEmailSender, EmailSender>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
