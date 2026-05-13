@@ -11,6 +11,10 @@ public class ReviewRepository(PlayLibDContext context) : IReviewRepository {
         return await _dbContext.Reviews.Where(r => r.VideogameId == videogameId).ToListAsync();
     }
 
+    public async Task<Review?> GetById(Guid reviewId) {
+        return await _dbContext.Reviews.FindAsync(reviewId);
+    }
+
     public async Task<bool> Create(Review review) {
         try {
             await _dbContext.Reviews.AddAsync(review);

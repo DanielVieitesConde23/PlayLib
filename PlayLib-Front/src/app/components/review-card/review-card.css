@@ -1,0 +1,87 @@
+.card {
+    background: #111;
+    border: 1px solid;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.username {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.date {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.rating-bar {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.rating-num {
+    margin-left: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.content {
+    color: #ccc;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #ff4a4a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    margin-left: 8px;
+}
+
+.delete-btn:hover {
+    color: #ff1a1a;
+}

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using PlayLib.Application.Interfaces;
 
 namespace PlayLib_Back.Controllers;
@@ -65,5 +65,13 @@ public class ProfileController(IUserService userService) : Controller {
             Success = true,
             Message = "Cuenta eliminada correctamente."
         });
+    }
+
+    [HttpGet]
+    [Route("IsAdmin/{userId}")]
+    public async Task<IActionResult> IsAdmin(Guid userId)
+    {
+        var isAdmin = await _userService.IsAdmin(userId);
+        return Ok(isAdmin);
     }
 }

@@ -13,7 +13,9 @@
     <p><b>Mínimo de jugadores:</b> {{ tabletop.min_player }}</p>
     <p><b>Máximo de jugadores:</b> {{ tabletop.max_player }}</p>
     <p><b>Duración promedio:</b> {{ tabletop.average_duration }} minutos</p>
+    @if(tabletop.isInLibrary) {
     <p><b>Partidas jugadas:</b> {{ tabletop.plays }}</p>
+    }
     <p><b>Etiquetas:</b>
       @for(tag of tabletop.tags; track tag) {
       <span class="tag" [style.background-color]="tag.hex">{{ tag.name }}</span>
@@ -21,24 +23,43 @@
       <span class="tag">Sin etiquetas</span>
       }
     </p>
+    <p><b>Idiomas:</b>
+      @for(lang of tabletop.languages; track lang) {
+      <span class="tag" [style.background-color]="'#b13fbb'">{{ lang.name }}</span>
+      } @empty {
+      <span class="tag">Sin idiomas</span>
+      }
+    </p>
+  </div>
+  <div class="actions">
+    @if(tabletop.isFavourite) {
+    <button (click)="toggleFavourite()">Quitar de favoritos</button>
+    } @else {
+    <button (click)="toggleFavourite()">Añadir a favoritos</button>
+    }
+    @if(tabletop.isInLibrary) {
+    <button (click)="toggleLibrary()">Quitar de la biblioteca</button>
+    } @else {
+    <button (click)="toggleLibrary()">Añadir a la biblioteca</button>
+    }
   </div>
 </div>
-<div class="actions">
-  <button>Favorito</button>
-  <button>Agregar a la biblioteca</button>
-  <button>Agregar a la lista de deseos</button>
-</div>
+
 <div class="reviews">
   <h2 class="review_title">Reseñas</h2>
-  <button class="add_review">Escribir una reseña</button>
-  @for(review of reviews; track review.id) {
-  <div class="review">
-    <p><b>{{ review.username }}</b> · {{ review.rating }}/10 · {{ review.review_date | date:'mediumDate' }}</p>
-    <p>{{ review.content }}</p>
+  <button class="add_review" (click)="openCreateReview()">Escribir una reseña</button> <br> <br>
+  <div class="reviews-list">
+    @for(review of reviews; track review.id) {
+    <app-review-card [review]="review" [accentColor]="'#b13fbb'" (deleted)="onReviewDeleted($event)"></app-review-card>
+    } @empty {
+    <p class="no_reviews">Sin reseñas aún.</p>
+    }
   </div>
-  } @empty {
-  <p class="no_reviews">Sin reseñas aún.</p>
-  }
 </div>
+
+@if(showCreateReview) {
+<app-create-review [gameId]="tabletop.id" [accentColor]="'#b13fbb'" (closed)="onReviewClosed($event)">
+</app-create-review>
+}
 
 }

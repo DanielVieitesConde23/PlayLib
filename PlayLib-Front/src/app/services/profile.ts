@@ -36,4 +36,8 @@ export class ProfileService {
   getLibraryBoardgames(userId: string) {
     return this.http.get<GamesCarrousel[]>(`${this.urlLibrary}/tabletop/${userId}`);
   }
+
+  isAdmin(userId: string) {
+    return this.http.get<boolean>(`${this.urlProfile}/IsAdmin/${userId}`);
+  }
 }

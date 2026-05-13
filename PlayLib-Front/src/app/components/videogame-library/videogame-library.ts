@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, Router } from '@angular/router';
 import { ProfileService } from '../../services/profile';
+import { GamesCarrousel } from '../../model/games-carrousel';
 
 @Component({
   selector: 'app-videogame-library',
@@ -34,7 +35,7 @@ export class VideogameLibrary implements OnInit {
   searchText = '';
   filter = 'all';
   constructor(private router: Router, private profileSvc: ProfileService, private cdr: ChangeDetectorRef) { }
-  videogames: Videogame[] = [];
+  videogames: GamesCarrousel[] = [];
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userId');
@@ -43,26 +44,20 @@ export class VideogameLibrary implements OnInit {
         this.videogames = response.map((item: any) => ({
           id: item.id,
           name: item.name,
-          description: '',
-          developer: '',
-          image_route: item.image,
-          release_date: new Date(),
-          format: '',
-          state: '',
-          tags: []
+          image: item.image
         }));
         this.cdr.detectChanges();
       });
     }
   }
 
-  get filteredGames(): Videogame[] {
+  get filteredGames(): GamesCarrousel[] {
     return this.videogames.filter(game =>
       game.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
 
-  goToGame(game: Videogame) {
+  goToGame(game: GamesCarrousel) {
     this.router.navigate(['user/videogame', game.name], {
       state: { id: game.id }
     });

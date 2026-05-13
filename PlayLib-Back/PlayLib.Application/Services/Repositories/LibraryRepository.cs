@@ -11,11 +11,16 @@ public class LibraryRepository(PlayLibDContext playLibDContext) : ILibraryReposi
 
     public async Task AddToLibrary(VideogameLibraryDTO videogameLibraryDTO)
     {
+        var user = await _playlibContext.Users
+        .FirstOrDefaultAsync(u => u.Id == videogameLibraryDTO.UserId) ?? throw new ArgumentNullException("El usuario no existe");
+
         _playlibContext.VideogameLibraries.Add(new VideogameLibrary
         {
             Id = Guid.NewGuid(),
-            UserId = videogameLibraryDTO.UserId,
-            VideogameId = videogameLibraryDTO.VideogameId
+            UserId = user.Id,
+            VideogameId = videogameLibraryDTO.VideogameId,
+            State = "Por jugar",
+            Format = "Físico"
         });
         await _playlibContext.SaveChangesAsync();
     }

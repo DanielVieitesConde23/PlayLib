@@ -1,0 +1,26 @@
+.dialog-title {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.dialog-content {
+  color: #ccc;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cancel-btn {
+  color: #ccc !important;
+  background-color: transparent !important;
+}
+
+.confirm-btn {
+  color: #ff4a4a !important;
+  background-color: rgba(255, 74, 74, 0.1) !important;
+}

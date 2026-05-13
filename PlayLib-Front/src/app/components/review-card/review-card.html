@@ -1,0 +1,23 @@
+<div class="card" [style.border-color]="accentColor" [style.box-shadow]="'0 0 10px ' + accentColor + '40'">
+    <div class="card-header">
+        <div class="user-info">
+            <span class="avatar" [style.background-color]="accentColor">{{ review.username.charAt(0).toUpperCase()
+                }}</span>
+            <span class="username">{{ review.username }}</span>
+        </div>
+        <span class="date">{{ review.review_date | date:'mediumDate' }}</span>
+        @if(canDelete) {
+            <button class="delete-btn" (click)="deleteReview()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        }
+    </div>
+    <div class="rating-bar">
+        @for(star of estrellas; track star) {
+        <span class="dot" [class.active]="star <= review.rating"
+            [style.background-color]="star <= review.rating ? accentColor : '#ffffff30'"></span>
+        }
+        <span class="rating-num" [style.color]="accentColor">{{ review.rating }}/10</span>
+    </div>
+    <p class="content">{{ review.content }}</p>
+</div>

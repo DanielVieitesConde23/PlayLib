@@ -55,7 +55,7 @@ public class RequestRepository(PlayLibDContext context) : IRequestRepository {
 
     public async Task<IEnumerable<Request>> GetAll()
     {
-        return await _dbContext.Requests.Where(x => x.Approved == null).ToListAsync();
+        return await _dbContext.Requests.Where(x => x.Approved == null).Include(x => x.User).ToListAsync();
     }
 
     public async Task<bool> Delete(Guid requestId)

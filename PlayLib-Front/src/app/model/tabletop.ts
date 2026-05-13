@@ -1,7 +1,8 @@
 import { Tag } from "./tag";
+import { Language } from "./language";
 
 export interface Tabletop {
-  id: string; 
+  id: string;
   name: string;
   description: string;
   creator: string;
@@ -12,4 +13,7 @@ export interface Tabletop {
   average_duration: number;
   plays: number;
   tags: Tag[];
+  languages: Language[];
+  isInLibrary: boolean;
+  isFavourite: boolean;
 }

@@ -14,8 +14,7 @@ public class RequestService(IRequestRepository requestRepository, IEmailSender e
         var requests = await _requestRepository.GetByUserId(userId);
         return requests.Select(r => new RequestDTO {
             Id = r.Id,
-            UserId = r.UserId,
-            GameName = r.GameName,
+            UserId = r.UserId,            GameName = r.GameName,
             IsTabletop = r.IsTabletop,
             Description = r.Description,
             Approved = r.Approved
@@ -90,6 +89,7 @@ public class RequestService(IRequestRepository requestRepository, IEmailSender e
         return requests.Select(r => new RequestDTO {
             Id = r.Id,
             UserId = r.UserId,
+            Username = r.User.UserName,
             GameName = r.GameName,
             IsTabletop = r.IsTabletop,
             Description = r.Description,

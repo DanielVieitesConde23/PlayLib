@@ -1,7 +1,8 @@
 import { Tag } from "./tag";
+import { Language } from "./language";
 
 export interface Videogame {
-  id: string; 
+  id: string;
   name: string;
   description: string;
   developer: string;
@@ -10,4 +11,7 @@ export interface Videogame {
   format: string;
   state: string;
   tags: Tag[];
+  languages: Language[];
+  isInLibrary: boolean;
+  isFavourite: boolean;
 }

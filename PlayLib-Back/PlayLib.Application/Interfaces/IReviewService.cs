@@ -1,4 +1,4 @@
-﻿using PlayLib.Data.DTOs;
+using PlayLib.Data.DTOs;
 
 namespace PlayLib.Application.Interfaces;
 
@@ -7,5 +7,5 @@ public interface IReviewService {
 
     Task<bool> CreateReview(ReviewDTO reviewDto);
 
-    Task<bool> DeleteReview(Guid reviewId);
+    Task<bool> DeleteReview(Guid reviewId, Guid userId);
 }

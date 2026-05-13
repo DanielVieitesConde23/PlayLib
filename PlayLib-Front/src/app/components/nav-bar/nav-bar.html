@@ -2,7 +2,9 @@
 
   <mat-sidenav class="sidebar" #sidenav="matSidenav" mode="side" opened>
     <div class="button">
+      @if(isAdmin) {
       <button routerLink="admin-request-mail">Buzón de peticiones</button><br>
+      }
       <button routerLink="home">Home</button><br>
       <button routerLink="videogame-library">Videojuegos</button><br>
       <button routerLink="tabletop-game-library">Juegos de Mesa</button><br>

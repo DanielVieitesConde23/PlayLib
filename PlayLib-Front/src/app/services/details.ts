@@ -11,6 +11,10 @@ export class Details {
 
   private urlVideogame = environment.apiURL + 'Videogame';
 
+  private urlLibrary = environment.apiURL + 'Library';
+
+  private urlFavourites = environment.apiURL + 'Favourites';
+
   constructor(private http: HttpClient) { }
 
   getTabletopGameDetails(id: string) {
@@ -19,5 +23,46 @@ export class Details {
 
   getVideogameDetails(id: string) {
     return this.http.get(`${this.urlVideogame}/${id}?userId=${localStorage.getItem('userId')}`);
+  }
+
+  addVideogameToLibrary(videogameId: string) {
+    const userId = localStorage.getItem('userId');
+    return this.http.post(`${this.urlLibrary}/add/videogame`, { VideogameId: videogameId, UserId: userId });
+  }
+
+
+  removeVideogameFromLibrary(videogameId: string) {
+    const userId = localStorage.getItem('userId');
+    return this.http.delete(`${this.urlLibrary}/delete/videogame`, { body: { VideogameId: videogameId, UserId: userId } });
+  }
+
+  addTabletopToLibrary(boardgameId: string) {
+    const userId = localStorage.getItem('userId');
+    return this.http.post(`${this.urlLibrary}/add/tabletop`, { BoardgameId: boardgameId, UserId: userId });
+  }
+
+  removeTabletopFromLibrary(boardgameId: string) {
+    const userId = localStorage.getItem('userId');
+    return this.http.delete(`${this.urlLibrary}/delete/tabletop`, { body: { BoardgameId: boardgameId, UserId: userId } });
+  }
+
+  addVideogameToFavourites(videogameId: string) {
+    const userId = localStorage.getItem('userId');
+    return this.http.post(`${this.urlFavourites}/videogame/${userId}/${videogameId}`, {});
+  }
+
+  removeVideogameFromFavourites(videogameId: string) {
+    const userId = localStorage.getItem('userId');
+    return this.http.delete(`${this.urlFavourites}/videogame/${userId}/${videogameId}`);
+  }
+
+  addTabletopToFavourites(tabletopId: string) {
+    const userId = localStorage.getItem('userId');
+    return this.http.post(`${this.urlFavourites}/tabletop/${userId}/${tabletopId}`, {});
+  }
+
+  removeTabletopFromFavourites(tabletopId: string) {
+    const userId = localStorage.getItem('userId');
+    return this.http.delete(`${this.urlFavourites}/tabletop/${userId}/${tabletopId}`);
   }
 }

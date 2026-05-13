@@ -1,8 +1,9 @@
 export interface Review {
     id: string;
     username: string;
-    title: string;
+    userId: string;
+    gameId: string;
+    review_date: Date;
     content: string;
     rating: number;
-    review_date: Date;
 }

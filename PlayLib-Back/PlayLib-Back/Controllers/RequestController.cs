@@ -33,7 +33,7 @@ public class RequestController(IRequestService requestService) : ControllerBase 
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] RequestDTO    request)
+    public async Task<IActionResult> Create([FromBody] RequestDTO request)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

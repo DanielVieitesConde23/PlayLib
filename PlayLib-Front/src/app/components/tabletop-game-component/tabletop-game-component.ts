@@ -4,18 +4,23 @@ import { Tabletop } from '../../model/tabletop';
 import { Review } from '../../model/review';
 import { ActivatedRoute } from '@angular/router';
 import { Details } from '../../services/details';
+import { ReviewCard } from '../review-card/review-card';
+import { CreateReview } from '../create-review/create-review';
+import { ReviewService } from '../../services/review';
 
 @Component({
   selector: 'app-tabletop-game-component',
-  imports: [CommonModule],
+  imports: [CommonModule, ReviewCard, CreateReview],
   templateUrl: './tabletop-game-component.html',
   styleUrl: './tabletop-game-component.css',
 })
 export class TabletopGameComponent implements OnInit {
   tabletop!: Tabletop;
   reviews: Review[] = [];
+  showCreateReview: boolean = false;
+  accentColor: string = '#b13fbb';
 
-  constructor(private detailsSvc: Details, private cdr: ChangeDetectorRef) { }
+  constructor(private detailsSvc: Details, private cdr: ChangeDetectorRef, private reviewSvc: ReviewService) { }
 
   ngOnInit(): void {
     const id = history.state?.id;
@@ -43,7 +48,13 @@ export class TabletopGameComponent implements OnInit {
           id: tag.id,
           name: tag.name,
           hex: tag.hex
-        }))
+        })),
+        languages: data.languages.map((lang: any) => ({
+          id: lang.id,
+          name: lang.name
+        })),
+        isInLibrary: data.isInLibrary,
+        isFavourite: data.isFavourite
       };
       this.reviews = (data.reviews ?? []).map((r: any) => ({
         id: r.id,
@@ -56,5 +67,55 @@ export class TabletopGameComponent implements OnInit {
       this.cdr.detectChanges();
     });
   }
+
+  toggleLibrary(): void {
+    if (this.tabletop.isInLibrary) {
+      this.detailsSvc.removeTabletopFromLibrary(this.tabletop.id).subscribe(() => {
+        this.tabletop.isInLibrary = false;
+        this.cdr.detectChanges();
+      });
+    } else {
+      this.detailsSvc.addTabletopToLibrary(this.tabletop.id).subscribe(() => {
+        this.tabletop.isInLibrary = true;
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+  toggleFavourite(): void {
+    if (this.tabletop.isFavourite) {
+      this.detailsSvc.removeTabletopFromFavourites(this.tabletop.id).subscribe(() => {
+        this.tabletop.isFavourite = false;
+        this.cdr.detectChanges();
+      });
+    } else {
+      this.detailsSvc.addTabletopToFavourites(this.tabletop.id).subscribe(() => {
+        this.tabletop.isFavourite = true;
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+  openCreateReview(): void {
+    this.showCreateReview = true;
+  }
+
+  onReviewClosed(created: boolean): void {
+    this.showCreateReview = false;
+    if (created && this.tabletop) {
+      this.loadGame(this.tabletop.id);
+    }
+  }
+
+  onReviewDeleted(reviewId: string): void {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.reviewSvc.deleteReview(reviewId, userId).subscribe({
+        next: () => this.loadGame(this.tabletop.id),
+        error: (err) => console.error('Error deleting review', err)
+      });
+    }
+  }
 }
+
 

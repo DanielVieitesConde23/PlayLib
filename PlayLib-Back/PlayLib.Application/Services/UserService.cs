@@ -1,4 +1,4 @@
-﻿using PlayLib.Application.Interfaces;
+using PlayLib.Application.Interfaces;
 using PlayLib.Application.Interfaces.Repositories;
 using PlayLib.Data.DTOs;
 
@@ -31,6 +31,12 @@ public class UserService(IUserRepository userRepository) : IUserService {
     public async Task<bool> DeleteUser(Guid userId)
     {
         return await _userRepository.DeleteUser(userId);
+    }
+
+    public async Task<bool> IsAdmin(Guid userId)
+    {
+        var user = await _userRepository.GetById(userId);
+        return user != null && user.Role == "Administrator";
     }
 
 }

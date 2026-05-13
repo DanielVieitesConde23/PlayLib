@@ -53,3 +53,10 @@ button {
     cursor: pointer;
     margin-left: 15px;
 }
+
+.logo-image { 
+    width: 150px;  
+    height: auto; 
+    display: block;  
+    object-fit: contain;
+}

@@ -1,4 +1,4 @@
-﻿using PlayLib.Data.DTOs;
+using PlayLib.Data.DTOs;
 
 namespace PlayLib.Application.Interfaces;
 
@@ -10,4 +10,6 @@ public interface IUserService {
     Task<bool> UpdateImage(Guid userId, string imageUrl);
 
     Task<bool> DeleteUser(Guid userId);
+
+    Task<bool> IsAdmin(Guid userId);
 }

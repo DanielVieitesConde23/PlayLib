@@ -1,0 +1,40 @@
+<div class="overlay">
+    <div class="popup" [style.border-color]="accentColor" (click)="$event.stopPropagation()">
+        <div class="popup-header" [style.border-bottom-color]="accentColor">
+            <h2 [style.color]="accentColor">Crear Petición</h2>
+            <button class="close-btn" (click)="cancel()">✕</button>
+        </div>
+
+        <div class="popup-body">
+            <label>Título del Juego</label>
+            <input type="text" [(ngModel)]="gameName" placeholder="Nombre del juego..." [style.border-color]="accentColor">
+
+            <label>Tipo de Juego</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="gameType" [value]="false" [(ngModel)]="isTabletop">
+                    Videojuego
+                </label>
+                <label>
+                    <input type="radio" name="gameType" [value]="true" [(ngModel)]="isTabletop">
+                    Juego de mesa
+                </label>
+            </div>
+
+            <label>Descripción</label>
+            <textarea [(ngModel)]="description" rows="4" placeholder="Descripción de la petición..."
+                [style.border-color]="accentColor"></textarea>
+
+            @if(error) {
+            <p class="error">{{ error }}</p>
+            }
+        </div>
+
+        <div class="popup-footer">
+            <button class="btn-cancel" (click)="cancel()">Cancelar</button>
+            <button class="btn-send" [style.background-color]="accentColor" (click)="send()" [disabled]="sending">
+                {{ sending ? 'Enviando...' : 'Enviar petición' }}
+            </button>
+        </div>
+    </div>
+</div>

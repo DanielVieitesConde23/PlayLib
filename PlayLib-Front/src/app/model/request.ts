@@ -1,7 +1,7 @@
 export interface Request {
     id: string;
     username: string;
-    title: string;
+    gameName: string;
     description: string;
     isTabletop: boolean;
     approved: boolean | null;

@@ -45,11 +45,11 @@ public class PlayLibDContext : DbContext {
 
         builder.Entity<VideogameLibrary>()
             .ToTable("Videogame_Library")
-            .HasKey(l => new { l.UserId, l.VideogameId });
+            .HasKey(l => l.Id);
 
         builder.Entity<TabletopLibrary>()
             .ToTable("Tabletop_Library")
-            .HasKey(l => new { l.UserId, l.TabletopId });
+            .HasKey(l => l.Id);
 
         builder.Entity<FavouriteTabletop>()
             .ToTable("Favourites_Tabletop")

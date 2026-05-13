@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Tabletop } from '../../model/tabletop';
 import { RouterModule, Router } from '@angular/router';
 import { ProfileService } from '../../services/profile';
+import { GamesCarrousel } from '../../model/games-carrousel';
 @Component({
   selector: 'app-tabletop-game-library',
   imports: [
@@ -32,7 +33,7 @@ export class TabletopGameLibrary implements OnInit {
   searchText = '';
   filter = 'all';
   constructor(private router: Router, private profileSvc: ProfileService, private cdr: ChangeDetectorRef) { }
-  tabletops: Tabletop[] = [];
+  tabletops: GamesCarrousel[] = [];
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userId');
@@ -41,28 +42,20 @@ export class TabletopGameLibrary implements OnInit {
         this.tabletops = response.map((item: any) => ({
           id: item.id,
           name: item.name,
-          description: '',
-          creator: '',
-          image_route: item.image,
-          release_date: new Date(),
-          min_player: 0,
-          max_player: 0,
-          average_duration: 0,
-          plays: 0,
-          tags: []
+          image: item.image,
         }));
         this.cdr.detectChanges();
       });
     }
   }
 
-  get filteredGames(): Tabletop[] {
+  get filteredGames(): GamesCarrousel[] {
     return this.tabletops.filter(game =>
       game.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
 
-  goToGame(game: Tabletop) {
+  goToGame(game: GamesCarrousel) {
     this.router.navigate(['user/tabletop-game', game.name], {
       state: { id: game.id }
     });

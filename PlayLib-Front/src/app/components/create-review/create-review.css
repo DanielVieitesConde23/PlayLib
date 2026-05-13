@@ -1,0 +1,167 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.popup {
+    background-color: #1e2d6b;
+    border: 2px solid #39D7FF;
+    border-radius: 16px;
+    padding: 28px;
+    width: 90%;
+    max-width: 480px;
+    color: #ffffff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    animation: popIn 0.2s ease;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #39D7FF;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+.popup-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #a0aec0;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+.popup-body label {
+    display: block;
+    font-size: 13px;
+    color: #a0aec0;
+    margin-bottom: 6px;
+    margin-top: 14px;
+}
+
+.stars-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.star-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    border: 1px solid #39D7FF;
+    background: transparent;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s, transform 0.1s;
+}
+
+.star-btn:hover {
+    transform: scale(1.1);
+}
+
+.star-btn.selected {
+    color: #1a1a2e;
+}
+
+textarea {
+    width: 100%;
+    background-color: #162054;
+    border: 1px solid #39D7FF;
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 10px 12px;
+    font-size: 14px;
+    resize: vertical;
+    box-sizing: border-box;
+    margin-top: 4px;
+}
+
+textarea:focus {
+    outline: none;
+    box-shadow: 0 0 8px #39D7FF60;
+}
+
+.error {
+    color: #fc8181;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-cancel {
+    background: transparent;
+    border: 1px solid #4a5568;
+    color: #a0aec0;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-cancel:hover {
+    border-color: #a0aec0;
+    color: #ffffff;
+}
+
+.btn-send {
+    border: none;
+    color: #1a1a2e;
+    padding: 8px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn-send:hover:not(:disabled) {
+    opacity: 0.85;
+    transform: scale(1.02);
+}
+
+.btn-send:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

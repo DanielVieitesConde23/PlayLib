@@ -21,5 +21,13 @@ export class HomeService {
   getPopularVideogames() {
     return this.http.get<GamesCarrousel[]>(`${this.urlVideogame}/getpopulargames?userId=${localStorage.getItem('userId')}`);
   }
+
+  getVideogamesByTag() {
+    return this.http.get<GamesCarrousel[]>(`${this.urlVideogame}/GetVideogameByTag?userId=${localStorage.getItem('userId')}`);
+  }
+
+  getTabletopsByTag() {
+    return this.http.get<GamesCarrousel[]>(`${this.urlTabletop}/gettabletopbytag?userId=${localStorage.getItem('userId')}`);
+  }
   
 }

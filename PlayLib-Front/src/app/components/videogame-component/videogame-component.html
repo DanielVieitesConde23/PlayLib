@@ -8,33 +8,57 @@
   </div>
   <div class="details">
     <p><b>Desarrollador:</b> {{ videogame.developer }}</p>
+    @if(videogame.isInLibrary) {
     <p><b>Formato:</b> {{ videogame.format }}</p>
+    }
     <p><b>Fecha de salida:</b> {{ videogame.release_date | date:'longDate' }}</p>
     <p><b>Descripción:</b> {{ videogame.description }}</p>
+    @if(videogame.isInLibrary) {
     <p><b>Estado:</b> {{ videogame.state }}</p>
-    <p><b>Etiquetas:</b> 
-    @for(tag of videogame.tags; track tag) {
+    }
+    <p><b>Etiquetas:</b>
+      @for(tag of videogame.tags; track tag) {
       <span class="tag" [style.background-color]="tag.hex">{{ tag.name }}</span>
-    } @empty {
+      } @empty {
       <span class="tag">Sin etiquetas</span>
-    }</p>
+      }
+    </p>
+    <p><b>Idiomas:</b>
+      @for(lang of videogame.languages; track lang) {
+      <span class="tag" [style.background-color]="'#39D7FF'">{{ lang.name }}</span>
+      } @empty {
+      <span class="tag">Sin idiomas</span>
+      }
+    </p>
   </div>
   <div class="actions">
-    <button>Favorito</button>
-    <button>Agregar a la biblioteca</button>
+    @if(videogame.isFavourite) {
+    <button (click)="toggleFavourite()">Quitar de favoritos</button>
+    } @else {
+    <button (click)="toggleFavourite()">Añadir a favoritos</button>
+    }
+    @if(videogame.isInLibrary) {
+    <button (click)="toggleLibrary()">Quitar de la biblioteca</button>
+    } @else {
+    <button (click)="toggleLibrary()">Añadir a la biblioteca</button>
+    }
   </div>
 </div>
 <div class="reviews">
   <h2 class="review_title">Reseñas</h2>
-  <button class="add_review">Escribir una reseña</button>
-  @for(review of reviews; track review.id) {
-    <div class="review">
-      <p><b>{{ review.username }}</b> · {{ review.rating }}/10 · {{ review.review_date | date:'mediumDate' }}</p>
-      <p>{{ review.content }}</p>
-    </div>
-  } @empty {
+  <button class="add_review" (click)="openCreateReview()">Escribir una reseña</button> <br> <br>
+  <div class="reviews-list">
+    @for(review of reviews; track review.id) {
+    <app-review-card [review]="review" [accentColor]="'#39D7FF'" (deleted)="onReviewDeleted($event)"></app-review-card>
+    } @empty {
     <p class="no_reviews">Sin reseñas aún.</p>
-  }
+    }
+  </div>
 </div>
+
+@if(showCreateReview) {
+<app-create-review [gameId]="videogame.id" [accentColor]="'#39D7FF'" (closed)="onReviewClosed($event)">
+</app-create-review>
+}
 
 }

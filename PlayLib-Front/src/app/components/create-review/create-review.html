@@ -1,0 +1,36 @@
+<div class="overlay" (click)="cancel()">
+    <div class="popup" [style.border-color]="accentColor" (click)="$event.stopPropagation()">
+        <div class="popup-header" [style.border-bottom-color]="accentColor">
+            <h2 [style.color]="accentColor">Escribir reseña</h2>
+            <button class="close-btn" (click)="cancel()">✕</button>
+        </div>
+
+        <div class="popup-body">
+            <label>Puntuación: <strong [style.color]="accentColor">{{ rating }}/10</strong></label>
+            <div class="stars-row">
+                @for(n of [1,2,3,4,5,6,7,8,9,10]; track n) {
+                <button class="star-btn" [class.selected]="n <= rating"
+                    [style.background-color]="n <= rating ? accentColor : 'transparent'"
+                    [style.border-color]="accentColor" (click)="rating = n">
+                    {{ n }}
+                </button>
+                }
+            </div>
+
+            <label>Comentario</label>
+            <textarea [(ngModel)]="content" rows="4" placeholder="Escribe tu opinión..."
+                [style.border-color]="accentColor"></textarea>
+
+            @if(error) {
+            <p class="error">{{ error }}</p>
+            }
+        </div>
+
+        <div class="popup-footer">
+            <button class="btn-cancel" (click)="cancel()">Cancelar</button>
+            <button class="btn-send" [style.background-color]="accentColor" (click)="send()" [disabled]="sending">
+                {{ sending ? 'Enviando...' : 'Publicar reseña' }}
+            </button>
+        </div>
+    </div>
+</div>
