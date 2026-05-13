@@ -1,7 +1,10 @@
 <div class="layout">
   <div class="content">
-    <div class="title">
+    <div class="header">
       <h1>Bienvenido a PlayLib</h1>
+      <button mat-icon-button class="search-btn" (click)="openSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
     </div>
     <app-scrollable-list-vg [title]="'Videojuegos más populares'" [listVideogames]="popularVideogames">
     </app-scrollable-list-vg>
@@ -12,3 +15,4 @@
     <app-scrollable-list-tg [title]="'Juegos de mesa para ti'" [listTabletops]="tabletopsByTag">
     </app-scrollable-list-tg>
   </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Review } from '../../model/review';
 import { ProfileService } from '../../services/profile';
@@ -21,13 +21,16 @@ export class ReviewCard implements OnInit {
     currentUserId: string | null = null;
     isAdmin: boolean = false;
 
-    constructor(private profileSvc: ProfileService, private dialog: MatDialog) {}
+    constructor(private profileSvc: ProfileService, private dialog: MatDialog, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.currentUserId = localStorage.getItem('userId');
         if (this.currentUserId) {
             this.profileSvc.isAdmin(this.currentUserId).subscribe({
-                next: (isAdmin) => this.isAdmin = isAdmin,
+                next: (isAdmin) => {
+                this.isAdmin = isAdmin
+                this.cdr.detectChanges();
+                },
                 error: () => this.isAdmin = false
             });
         }

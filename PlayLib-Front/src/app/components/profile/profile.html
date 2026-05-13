@@ -1,11 +1,22 @@
 <h1 class="title">Mi perfil</h1>
 <div class="profile-container">
   <div class="profile-left">
-    <div class="round-container">
+    <div class="round-container" style="position: relative;">
       <img [src]="profile.image_route" alt="image">
+      <button mat-icon-button (click)="openEditDialog('image')" style="position: absolute; bottom: 0; right: 0; background-color: rgba(255,255,255,0.7);">
+        <mat-icon>edit</mat-icon>
+      </button>
     </div>
-    <div class="username-container">
-      <p>{{ profile.username }}</p>
+    <div class="username-container" style="display: flex; align-items: center; justify-content: center;">
+      <p style="margin: 0; margin-right: 8px;">{{ profile.username }}</p>
+      <button mat-icon-button (click)="openEditDialog('username')" style="color: white;">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+    <div style="margin-top: 10px;">
+      <button mat-raised-button (click)="openEditDialog('password')">
+        <mat-icon>edit</mat-icon> Cambiar contraseña
+      </button>
     </div>
   </div>
 
@@ -22,5 +33,5 @@
   <app-scrollable-list-tg [title]="'Tus juegos de mesa favoritos'" [listTabletops]="tabletops"></app-scrollable-list-tg>
 </div>
 <div class="delete-btn">
-  <button>Eliminar cuenta</button>
+  <button (click)="deleteAccount()">Eliminar cuenta</button>
 </div>

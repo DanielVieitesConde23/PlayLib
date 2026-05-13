@@ -1,4 +1,4 @@
-﻿using PlayLib.Application.Interfaces;
+using PlayLib.Application.Interfaces;
 using PlayLib.Application.Interfaces.Repositories;
 using PlayLib.Data.DTOs;
 using PlayLib.Data.Entities;
@@ -34,6 +34,7 @@ public class VideogameService(IVideogameRepository videogameRepository) : IVideo
             Reviews = videogame.Reviews.Select(r => new ReviewDTO
             {
                 Id = r.Id,
+                UserId = r.UserId,
                 Username = r.User?.UserName ?? "",
                 ReviewDate = r.ReviewDate,
                 Rating = r.Rating,

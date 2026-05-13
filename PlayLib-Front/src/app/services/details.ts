@@ -65,4 +65,12 @@ export class Details {
     const userId = localStorage.getItem('userId');
     return this.http.delete(`${this.urlFavourites}/tabletop/${userId}/${tabletopId}`);
   }
+
+  createVideogame(videogameDTO: any) {
+    return this.http.post(`${this.urlVideogame}/Create`, videogameDTO);
+  }
+
+  createTabletopGame(tabletopDTO: any) {
+    return this.http.post(`${this.urlTabletop}/Create`, tabletopDTO);
+  }
 }

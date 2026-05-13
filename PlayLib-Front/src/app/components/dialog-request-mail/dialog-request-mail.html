@@ -1,30 +1,81 @@
-<h2 mat-dialog-title>Creación de juegos</h2>
+<h2 mat-dialog-title>Crear juego</h2>
 <mat-dialog-content>
-
-    <mat-select [(ngModel)]="requestSeleccionada">
+  <div style="margin-top: 15px;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Selecciona una petición</mat-label>
+      <mat-select [(ngModel)]="requestSeleccionada" (selectionChange)="onSelectionChange()">
         @for (request of data.requests; track request.id) {
         <mat-option [value]="request">
-            {{ request.title }}
+          {{ request.gameName }}
         </mat-option>
         } @empty {
         <mat-option disabled>No hay peticiones</mat-option>
         }
-    </mat-select>
+      </mat-select>
+    </mat-form-field>
 
-    @if (requestSeleccionada) {
+    <div style="margin-bottom: 15px;">
+      <mat-radio-group [(ngModel)]="gameType">
+        <mat-radio-button value="videogame">Videojuego</mat-radio-button>
+        <mat-radio-button value="tabletop">Juego de mesa</mat-radio-button>
+      </mat-radio-group>
+    </div>
 
-    <p>Título:</p>
-    <input type="text" [(ngModel)]="requestSeleccionada.title">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="gameData.name" required>
+    </mat-form-field>
 
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput [(ngModel)]="gameData.description" required></textarea>
+    </mat-form-field>
 
-    <p>Descripción:</p>
-    <input type="text" [(ngModel)]="requestSeleccionada.description">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Enlace imagen</mat-label>
+      <input matInput [(ngModel)]="gameData.image_Route" required>
+    </mat-form-field>
 
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Fecha de lanzamiento</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="gameData.release_Date" required>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
+    @if (gameType === 'videogame') {
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Desarrollador</mat-label>
+      <input matInput [(ngModel)]="gameData.developer" required>
+    </mat-form-field>
     }
 
+    @if (gameType === 'tabletop') {
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Creador</mat-label>
+      <input matInput [(ngModel)]="gameData.creator" required>
+    </mat-form-field>
 
+    <div style="display: flex; gap: 10px;">
+      <mat-form-field appearance="fill" style="flex: 1;">
+        <mat-label>Jugadores mínimos</mat-label>
+        <input matInput type="number" [(ngModel)]="gameData.minPlayerNumber" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="flex: 1;">
+        <mat-label>Jugadores máximos</mat-label>
+        <input matInput type="number" [(ngModel)]="gameData.maxPlayerNumber" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="flex: 1;">
+        <mat-label>Duración promedio (mins)</mat-label>
+        <input matInput type="number" [(ngModel)]="gameData.averageDuration" required>
+      </mat-form-field>
+    </div>
+    }
+  </div>
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-button mat-dialog-close>Cerrar</button>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary" (click)="addGame()">Agregar</button>
 </mat-dialog-actions>

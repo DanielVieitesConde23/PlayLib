@@ -27,6 +27,37 @@ export class Register {
   }
 
   toHome(): void {
+    if (this.userRegister.password.length < 8) {
+      this.snackbar.open("La contraseña debe tener al menos 8 caracteres.", "Cerrar", {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
+      return;
+    } else if (this.userRegister.password !== this.userRegister.repeatPassword) {
+      this.snackbar.open("Las contraseñas no coinciden.", "Cerrar", {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
+      return;
+    } else if (!this.userRegister.email.includes('@')) {
+      this.snackbar.open("El correo electrónico no es válido.", "Cerrar", {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
+      return;
+    } else if (this.userRegister.username.trim() === "") {
+      this.snackbar.open("El nombre de usuario no puede estar vacío.", "Cerrar", {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
+      return;
+    } else if (this.userRegister.email.trim() === "") {
+      this.snackbar.open("El correo electrónico no puede estar vacío.", "Cerrar", {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition
+      });
+      return;
+    } 
     this.authService.register(this.userRegister).subscribe({
       next: (res) => {
         if (res.success) {

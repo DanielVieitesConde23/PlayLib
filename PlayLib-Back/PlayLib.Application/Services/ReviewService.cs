@@ -18,6 +18,7 @@ public class ReviewService(IReviewRepository reviewRepository, IUserRepository u
             var user = await _userRepository.GetById(r.UserId);
             result.Add(new ReviewDTO {
                 Id = r.Id,
+                UserId = r.UserId,
                 Username = user?.UserName ?? "",
                 ReviewDate = r.ReviewDate,
                 Rating = r.Rating,

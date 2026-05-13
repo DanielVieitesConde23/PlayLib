@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>
+  <ng-container *ngIf="data.mode === 'username'">Editar nombre de usuario</ng-container>
+  <ng-container *ngIf="data.mode === 'password'">Editar contraseña</ng-container>
+  <ng-container *ngIf="data.mode === 'image'">Editar foto de perfil</ng-container>
+</h2>
+<mat-dialog-content>
+  <div style="margin-top: 15px;">
+    <ng-container *ngIf="data.mode === 'username'">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Nuevo nombre de usuario</mat-label>
+        <input matInput [(ngModel)]="input1">
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="data.mode === 'password'">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Contraseña actual</mat-label>
+        <input matInput type="password" [(ngModel)]="input1">
+      </mat-form-field>
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Nueva contraseña</mat-label>
+        <input matInput type="password" [(ngModel)]="input2">
+      </mat-form-field>
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Repetir nueva contraseña</mat-label>
+        <input matInput type="password" [(ngModel)]="input3">
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="data.mode === 'image'">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Nueva URL de imagen</mat-label>
+        <input matInput [(ngModel)]="input1">
+      </mat-form-field>
+    </ng-container>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+</mat-dialog-actions>

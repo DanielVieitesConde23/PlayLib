@@ -56,6 +56,7 @@ export class VideogameComponent {
       this.reviews = (data.reviews ?? []).map((r: any) => ({
         id: r.id,
         username: r.username,
+        userId: r.userId,
         title: '',
         content: r.content ?? '',
         rating: r.rating,

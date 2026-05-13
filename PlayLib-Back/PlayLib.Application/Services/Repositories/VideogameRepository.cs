@@ -93,7 +93,8 @@ public class VideogameRepository(PlayLibDContext context) : IVideogameRepository
             {
                 Id = v.Id,
                 Name = v.Name,
-                Type = "Videogame"
+                Type = "Videogame",
+                Image = v.ImageRoute
             })
             .ToListAsync();
 
@@ -103,7 +104,8 @@ public class VideogameRepository(PlayLibDContext context) : IVideogameRepository
             {
                 Id = t.Id,
                 Name = t.Name,
-                Type = "Tabletop"
+                Type = "Tabletop",
+                Image = t.ImageRoute
             })
             .ToListAsync();
 

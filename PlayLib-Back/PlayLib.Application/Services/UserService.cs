@@ -23,10 +23,14 @@ public class UserService(IUserRepository userRepository) : IUserService {
         var user = await _userRepository.GetByUsername(username);
         if (user == null)
         {
+            user = await _userRepository.GetById(userId);
+            user.UserName = username;
+            return await _userRepository.UpdateUser(user);
+        }
+        else
+        {
             return false;
         }
-        user.UserName = username;
-        return await _userRepository.UpdateUser(user);
     }
     public async Task<bool> DeleteUser(Guid userId)
     {

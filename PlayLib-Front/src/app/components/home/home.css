@@ -16,3 +16,22 @@
   width: 100%;
   padding: 20px;
 }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.header h1 {
+  color: white;
+  margin: 0;
+}
+
+.search-btn {
+  position: absolute;
+  right: 0;
+  color: white;
+}

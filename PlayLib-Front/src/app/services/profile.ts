@@ -40,4 +40,18 @@ export class ProfileService {
   isAdmin(userId: string) {
     return this.http.get<boolean>(`${this.urlProfile}/IsAdmin/${userId}`);
   }
+
+  updateUsername(userId: string, username: string) {
+    return this.http.put(`${this.urlProfile}/UpdateUsername/${userId}/${username}`, {});
+  }
+
+  updateImage(userId: string, imageUrl: string) {
+    return this.http.put(`${this.urlProfile}/UpdateImage/${userId}`, JSON.stringify(imageUrl), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  deleteAccount(userId: string) {
+    return this.http.delete(`${this.urlProfile}/DeleteAccount/${userId}`);
+  }
 }

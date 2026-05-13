@@ -3,12 +3,20 @@ import { ScrollableListVg } from "../scrollable-list-vg/scrollable-list-vg";
 import { ScrollableListTg } from "../scrollable-list-tg/scrollable-list-tg";
 import { GamesCarrousel } from '../../model/games-carrousel';
 import { HomeService } from '../../services/home';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { SearchDialog } from '../search-dialog/search-dialog';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [
     ScrollableListVg,
-    ScrollableListTg
+    ScrollableListTg,
+    MatDialogModule,
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './home.html',
   styleUrl: './home.css',
@@ -16,14 +24,11 @@ import { HomeService } from '../../services/home';
 export class Home implements OnInit {
 
   popularVideogames: GamesCarrousel[] = [];
-
   popularTabletops: GamesCarrousel[] = [];
-
   videogamesByTag: GamesCarrousel[] = [];
-
   tabletopsByTag: GamesCarrousel[] = [];
 
-  constructor(private homeSvc: HomeService, private cdr: ChangeDetectorRef) { }
+  constructor(private homeSvc: HomeService, private cdr: ChangeDetectorRef, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getPopularVideogames();
@@ -55,9 +60,15 @@ export class Home implements OnInit {
 
   getTabletopsByTag(): void {
     this.homeSvc.getTabletopsByTag().subscribe((response) => {
-      console.log('Tabletops by tag response:', response);
       this.tabletopsByTag = [...response];
       this.cdr.markForCheck();
+    });
+  }
+
+  openSearch(): void {
+    this.dialog.open(SearchDialog, {
+      width: '850px',
+      maxWidth: '95vw'
     });
   }
 }

@@ -36,6 +36,8 @@ public class TabletopService(ITabletopRepository tabletopRepository) : ITabletop
             Reviews = tabletop.Reviews.Select(r => new ReviewDTO
             {
                 Id = r.Id,
+                UserId = r.UserId,
+                GameId = tabletop.Id,
                 Username = r.User?.UserName ?? "",
                 ReviewDate = r.ReviewDate,
                 Rating = r.Rating,
