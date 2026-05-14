@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { Request } from "../../model/request";
 import { MatCardModule } from '@angular/material/card';
-import { MatIcon } from "@angular/material/icon";
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DialogRequestMail } from '../dialog-request-mail/dialog-request-mail';
@@ -10,7 +9,7 @@ import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-admin-request-mail',
-  imports: [MatCardModule, MatIcon, MatButtonModule, MatDialogModule],
+  imports: [MatCardModule, MatButtonModule, MatDialogModule],
   templateUrl: './admin-request-mail.html',
   styleUrl: './admin-request-mail.css',
 })

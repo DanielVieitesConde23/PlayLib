@@ -9,12 +9,29 @@
   <div class="details">
     <p><b>Desarrollador:</b> {{ videogame.developer }}</p>
     @if(videogame.isInLibrary) {
-    <p><b>Formato:</b> {{ videogame.format }}</p>
+    <div class="inline-field">
+      <b>Formato:</b>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-select [(ngModel)]="videogame.format" (selectionChange)="updateFormat($event.value)">
+          <mat-option value="Físico">Físico</mat-option>
+          <mat-option value="Digital">Digital</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     }
     <p><b>Fecha de salida:</b> {{ videogame.release_date | date:'longDate' }}</p>
     <p><b>Descripción:</b> {{ videogame.description }}</p>
     @if(videogame.isInLibrary) {
-    <p><b>Estado:</b> {{ videogame.state }}</p>
+    <div class="inline-field">
+      <b>Estado:</b>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-select [(ngModel)]="videogame.state" (selectionChange)="updateState($event.value)">
+          <mat-option value="No jugado">No jugado</mat-option>
+          <mat-option value="Jugando">Jugando</mat-option>
+          <mat-option value="Jugado">Jugado</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     }
     <p><b>Etiquetas:</b>
       @for(tag of videogame.tags; track tag) {
@@ -33,14 +50,22 @@
   </div>
   <div class="actions">
     @if(videogame.isFavourite) {
-    <button (click)="toggleFavourite()">Quitar de favoritos</button>
+    <button class="img-btn" (click)="toggleFavourite()" title="Quitar de favoritos">
+      <img src="boton_fav_lleno.png" alt="Quitar de favoritos">
+    </button>
     } @else {
-    <button (click)="toggleFavourite()">Añadir a favoritos</button>
+    <button class="img-btn" (click)="toggleFavourite()" title="Añadir a favoritos">
+      <img src="boton_fav_vacio.png" alt="Añadir a favoritos">
+    </button>
     }
     @if(videogame.isInLibrary) {
-    <button (click)="toggleLibrary()">Quitar de la biblioteca</button>
+    <button class="img-btn" (click)="toggleLibrary()" title="Quitar de la biblioteca">
+      <img src="boton_menos.png" alt="Quitar de la biblioteca">
+    </button>
     } @else {
-    <button (click)="toggleLibrary()">Añadir a la biblioteca</button>
+    <button class="img-btn" (click)="toggleLibrary()" title="Añadir a la biblioteca">
+      <img src="boton_mas.png" alt="Añadir a la biblioteca">
+    </button>
     }
   </div>
 </div>

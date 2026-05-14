@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PlayLib.Application.Interfaces;
@@ -59,6 +59,8 @@ public static class ServicesConfiguration {
         services.AddScoped<ILibraryService, LibraryService>();
         services.AddScoped<ILibraryRepository, LibraryRepository>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ILanguageRepository, LanguageRepository>();
+        services.AddScoped<ILanguageService, LanguageService>();
         services.AddTransient<IEmailSender, EmailSender>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>

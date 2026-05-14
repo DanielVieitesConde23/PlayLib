@@ -39,6 +39,37 @@
   background-color: #233471;
 }
 
+.inline-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.inline-field b {
+  white-space: nowrap;
+}
+
+.plays-container {
+  display: flex;
+  align-items: center;
+}
+
+.counter-btn {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plays-count {
+  margin: 0 10px;
+  font-weight: bold;
+}
+
 .review_title {
   color: white;
 }
@@ -55,9 +86,33 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  align-items: center;
 }
-.actions button {
-  width: fit-content;
+
+.img-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.img-btn img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.img-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 .tag {

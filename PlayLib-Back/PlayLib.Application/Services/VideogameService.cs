@@ -36,6 +36,7 @@ public class VideogameService(IVideogameRepository videogameRepository) : IVideo
                 Id = r.Id,
                 UserId = r.UserId,
                 Username = r.User?.UserName ?? "",
+                UserImage = r.User.Profile_Img ?? "",
                 ReviewDate = r.ReviewDate,
                 Rating = r.Rating,
                 Content = r.Content

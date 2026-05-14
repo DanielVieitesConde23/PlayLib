@@ -3,14 +3,28 @@
   <mat-sidenav class="sidebar" #sidenav="matSidenav" mode="side" opened>
     <div class="button">
       @if(isAdmin) {
-      <button routerLink="admin-request-mail">Buzón de peticiones</button><br>
+      <button class="img-btn" routerLink="admin-request-mail" title="Buzón de peticiones">
+        <img src="mail.png" alt="Buzón de peticiones">
+      </button>
       }
-      <button routerLink="home">Home</button><br>
-      <button routerLink="videogame-library">Videojuegos</button><br>
-      <button routerLink="tabletop-game-library">Juegos de Mesa</button><br>
-      <button routerLink="request-list">Peticiones</button><br>
-      <button routerLink="profile">Perfil</button><br>
-      <button routerLink="/login" (click)="logout()">Logout</button>
+      <button class="img-btn" routerLink="home" title="Home">
+        <img src="boton_home.png" alt="Home">
+      </button>
+      <button class="img-btn" routerLink="videogame-library" title="Videojuegos">
+        <img src="videojuego.png" alt="Videojuegos">
+      </button>
+      <button class="img-btn" routerLink="tabletop-game-library" title="Juegos de Mesa">
+        <img src="juegos_mesa.png" alt="Juegos de Mesa">
+      </button>
+      <button class="img-btn" routerLink="request-list" title="Peticiones">
+        <img src="mail.png" alt="Peticiones">
+      </button>
+      <button class="img-btn" routerLink="profile" title="Perfil">
+        <img src="perfil.png" alt="Perfil">
+      </button>
+      <button class="img-btn" routerLink="/login" (click)="logout()" title="Logout">
+        <img src="logout.png" alt="Logout">
+      </button>
     </div>
   </mat-sidenav>
 

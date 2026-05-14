@@ -1,8 +1,7 @@
 <div class="card" [style.border-color]="accentColor" [style.box-shadow]="'0 0 10px ' + accentColor + '40'">
     <div class="card-header">
         <div class="user-info">
-            <span class="avatar" [style.background-color]="accentColor">{{ review.username.charAt(0).toUpperCase()
-                }}</span>
+            <span class="avatar" [style.background-color]="accentColor"><img class="avatar" [src]="review.userImage" alt="profile_img"></span>
             <span class="username">{{ review.username }}</span>
         </div>
         <span class="date">{{ review.review_date | date:'mediumDate' }}</span>

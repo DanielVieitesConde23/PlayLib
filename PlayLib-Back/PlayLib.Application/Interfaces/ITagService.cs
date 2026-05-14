@@ -1,5 +1,5 @@
-﻿namespace PlayLib.Application.Interfaces;
+namespace PlayLib.Application.Interfaces;
 
 public interface ITagService {
-    Task<IEnumerable<string>> GetAllTags();
+    Task<IEnumerable<object>> GetAllTags();
 }

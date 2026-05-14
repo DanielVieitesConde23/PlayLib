@@ -73,9 +73,31 @@
       </mat-form-field>
     </div>
     }
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Etiquetas</mat-label>
+      <mat-select multiple [value]="selectedTags">
+        @for (tag of allTags; track tag.id) {
+        <mat-option [value]="tag.id" (click)="toggleTag(tag.id)">
+          {{ tag.name }}
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Idiomas</mat-label>
+      <mat-select multiple [value]="selectedLanguages">
+        @for (lang of allLanguages; track lang.id) {
+        <mat-option [value]="lang.id" (click)="toggleLanguage(lang.id)">
+          {{ lang.name }}
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
   </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-raised-button color="primary" (click)="addGame()">Agregar</button>
+<mat-dialog-actions align="end" class="custom-dialog-actions">
+  <button class="btn-cancel" mat-dialog-close>Cancelar</button>
+  <button class="btn-send" (click)="addGame()">Agregar</button>
 </mat-dialog-actions>

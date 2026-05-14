@@ -42,7 +42,7 @@ export class EditDialog {
         });
         return;
       }
-      if (this.input1.length < 8) {
+      if (this.input2.length < 8) {
         this.snackbar.open("La contraseña debe tener al menos 8 caracteres.", "Cerrar", {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition

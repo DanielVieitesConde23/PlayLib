@@ -39,6 +39,7 @@ public class TabletopService(ITabletopRepository tabletopRepository) : ITabletop
                 UserId = r.UserId,
                 GameId = tabletop.Id,
                 Username = r.User?.UserName ?? "",
+                UserImage = r.User?.Profile_Img ?? "",
                 ReviewDate = r.ReviewDate,
                 Rating = r.Rating,
                 Content = r.Content

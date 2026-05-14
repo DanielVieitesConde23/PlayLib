@@ -7,9 +7,14 @@ import { ReviewCard } from '../review-card/review-card';
 import { CreateReview } from '../create-review/create-review';
 import { ReviewService } from '../../services/review';
 
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-videogame-component',
-  imports: [CommonModule, ReviewCard, CreateReview],
+  standalone: true,
+  imports: [CommonModule, ReviewCard, CreateReview, MatSelectModule, MatFormFieldModule, FormsModule],
   templateUrl: './videogame-component.html',
   styleUrl: './videogame-component.css',
 })
@@ -57,6 +62,7 @@ export class VideogameComponent {
         id: r.id,
         username: r.username,
         userId: r.userId,
+        userImage: r.userImage,
         title: '',
         content: r.content ?? '',
         rating: r.rating,
@@ -115,5 +121,25 @@ export class VideogameComponent {
         error: (err) => console.error('Error deleting review', err)
       });
     }
+  }
+
+  updateFormat(newFormat: string): void {
+    this.detailsSvc.updateVideogameFormat(this.videogame.id, newFormat).subscribe({
+      next: () => {
+        this.videogame.format = newFormat;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error updating format', err)
+    });
+  }
+
+  updateState(newState: string): void {
+    this.detailsSvc.updateVideogameState(this.videogame.id, newState).subscribe({
+      next: () => {
+        this.videogame.state = newState;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error updating state', err)
+    });
   }
 }

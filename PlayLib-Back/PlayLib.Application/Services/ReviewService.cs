@@ -20,6 +20,7 @@ public class ReviewService(IReviewRepository reviewRepository, IUserRepository u
                 Id = r.Id,
                 UserId = r.UserId,
                 Username = user?.UserName ?? "",
+                UserImage = user?.Profile_Img ?? "",
                 ReviewDate = r.ReviewDate,
                 Rating = r.Rating,
                 Content = r.Content

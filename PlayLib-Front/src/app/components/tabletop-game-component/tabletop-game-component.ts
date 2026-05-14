@@ -8,9 +8,13 @@ import { ReviewCard } from '../review-card/review-card';
 import { CreateReview } from '../create-review/create-review';
 import { ReviewService } from '../../services/review';
 
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 @Component({
   selector: 'app-tabletop-game-component',
-  imports: [CommonModule, ReviewCard, CreateReview],
+  standalone: true,
+  imports: [CommonModule, ReviewCard, CreateReview, MatIconModule, MatButtonModule],
   templateUrl: './tabletop-game-component.html',
   styleUrl: './tabletop-game-component.css',
 })
@@ -60,6 +64,7 @@ export class TabletopGameComponent implements OnInit {
         id: r.id,
         username: r.username,
         userId: r.userId,
+        userImage: r.userImage,
         title: '',
         content: r.content ?? '',
         rating: r.rating,
@@ -116,6 +121,19 @@ export class TabletopGameComponent implements OnInit {
         error: (err) => console.error('Error deleting review', err)
       });
     }
+  }
+
+  updatePlays(amount: number): void {
+    const newPlays = this.tabletop.plays + amount;
+    if (newPlays < 0) return;
+
+    this.detailsSvc.updateTabletopPlayedGames(this.tabletop.id, newPlays).subscribe({
+      next: () => {
+        this.tabletop.plays = newPlays;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error updating plays', err)
+    });
   }
 }
 

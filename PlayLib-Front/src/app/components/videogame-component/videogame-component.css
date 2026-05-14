@@ -39,6 +39,21 @@
   background-color: #233471;
 }
 
+.inline-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.inline-field b {
+  white-space: nowrap;
+}
+
+.inline-field mat-form-field {
+  width: 150px;
+}
+
 .review_title {
   color: white;
 }
@@ -61,9 +76,33 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  align-items: center;
 }
-.actions button {
-  width: fit-content;
+
+.img-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.img-btn img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.img-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 .tag {
@@ -100,4 +139,20 @@ app-review-card {
   width: 100%;
   transform: scale(0.95);
   transform-origin: top center;
+}
+
+::ng-deep .inline-field .mdc-text-field--outlined {
+  --mdc-outlined-text-field-outline-color: #39D7FF;
+  --mdc-outlined-text-field-hover-outline-color: #ffffff;
+  --mdc-outlined-text-field-focus-outline-color: #39D7FF;
+  background-color: #1e2d6b;
+  border-radius: 4px;
+}
+
+::ng-deep .inline-field .mat-mdc-select-value-text {
+  color: white !important;
+}
+
+::ng-deep .inline-field .mat-mdc-select-arrow {
+  color: #39D7FF !important;
 }

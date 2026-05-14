@@ -73,4 +73,19 @@ export class Details {
   createTabletopGame(tabletopDTO: any) {
     return this.http.post(`${this.urlTabletop}/Create`, tabletopDTO);
   }
+
+  updateVideogameState(videogameId: string, newState: string) {
+    const userId = localStorage.getItem('userId');
+    return this.http.put(`${this.urlVideogame}/UpdateState?videogameId=${videogameId}&userId=${userId}&newState=${newState}`, {});
+  }
+
+  updateVideogameFormat(videogameId: string, newFormat: string) {
+    const userId = localStorage.getItem('userId');
+    return this.http.put(`${this.urlVideogame}/UpdateFormat?videogameId=${videogameId}&userId=${userId}&newFormat=${newFormat}`, {});
+  }
+
+  updateTabletopPlayedGames(tabletopId: string, playedGames: number) {
+    const userId = localStorage.getItem('userId');
+    return this.http.put(`${this.urlTabletop}/UpdateTabletopPlayedGames?tabletopId=${tabletopId}&userId=${userId}&playedGames=${playedGames}`, {});
+  }
 }
