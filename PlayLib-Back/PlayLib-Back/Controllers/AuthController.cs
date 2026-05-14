@@ -85,7 +85,7 @@ public class AuthController(IAuthService authService, IUserRepository userReposi
         if (user == null)
             return NotFound(new Response { Success = false, Message = "Usuario no encontrado." });
         if (!_authService.IsPasswordCorrect(updatePasswordDto.CurrentPassword, user.Password))
-            return Ok(new Response { Success = false, Message = "Contraseña actual incorrecta. Inténtalo de nuevo." });
+            return BadRequest(new Response { Success = false, Message = "Contraseña actual incorrecta. Inténtalo de nuevo." });
         if (updatePasswordDto.NewPassword != updatePasswordDto.RepeatNewPassword)
             return Conflict(new Response { Success = false, Message = "Las nuevas contraseñas no son iguales" });
         string newHashedPassword = _passwordHasher.HashPassword(updatePasswordDto.NewPassword);

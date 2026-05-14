@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { HomeService } from '../../services/home';
-import { GamesCarrousel } from '../../model/games-carrousel';
 import { GameSearchResult } from '../../model/game-search-result';
 
 @Component({
@@ -35,7 +34,6 @@ export class SearchDialog {
     this.homeSvc.searchVideogamesByName(this.searchText.trim()).subscribe({
       next: (results) => {
         this.games = results;
-        console.log(this.games);
         this.cdr.detectChanges();
       },
       error: () => {

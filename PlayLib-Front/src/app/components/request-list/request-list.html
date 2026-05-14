@@ -4,7 +4,7 @@
 <div class="content">
     <h2 class="subtitle">Tus peticiones: </h2>
     <button class="img-btn" (click)="openCreateRequest()" title="Nueva petición">
-      <img src="boton_mas.png" alt="Nueva petición">
+        <img src="boton_mas.png" alt="Nueva petición">
     </button>
 </div>
 <div class="request-list">
@@ -21,7 +21,13 @@
                 </button>
             </div>
             <div class="description-container">
-                <p>{{ req.description }}</p>
+                <p>
+                    {{
+                    req.description.length > 100
+                    ? (req.description | slice:0:100) + '...'
+                    : req.description
+                    }}
+                </p>
             </div>
             <div class="card-footer">
                 @if(req.isTabletop) {
@@ -49,5 +55,5 @@
 </div>
 
 @if (showCreateRequest) {
-    <app-create-request (closed)="onCreateRequestClosed($event)"></app-create-request>
+<app-create-request (closed)="onCreateRequestClosed($event)"></app-create-request>
 }

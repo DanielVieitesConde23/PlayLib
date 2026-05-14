@@ -6,7 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Details } from '../../services/details';
 import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
@@ -19,6 +19,7 @@ import { Language } from '../../model/language';
   selector: 'app-dialog-request-mail',
   standalone: true,
   imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule, FormsModule, MatSelectModule, MatInputModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, MatSnackBarModule, MatCheckboxModule],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './dialog-request-mail.html',
   styleUrl: './dialog-request-mail.css',
   encapsulation: ViewEncapsulation.None
